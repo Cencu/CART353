@@ -1,4 +1,5 @@
 boolean white;
+boolean black;
 WhiteSquare[][] grid;
 BlackSquare[][] grid2;
 int rows;
@@ -26,8 +27,10 @@ void setup() {
   }
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      grid2[i][j] = new BlackSquare(i, j, gridSquareSize, white);
+      grid2[i][j] = new BlackSquare(i, j, gridSquareSize, !black);
+      black = !black;
     }
+    black = !black;
   }
 }
 
@@ -55,5 +58,6 @@ void draw() {
   // do mouseOver-based feeding only on **valid** grid slots
   if (currentHorizSquare >= 0 && currentHorizSquare <= 7 && currentVertSquare >= 0 && currentVertSquare <= 7) {
     grid[currentHorizSquare][currentVertSquare].feed();
+    grid2[currentHorizSquare][currentVertSquare].feed();
   }
 }

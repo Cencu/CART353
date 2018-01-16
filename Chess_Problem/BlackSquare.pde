@@ -6,19 +6,19 @@ class BlackSquare {
   int col;
   float food;
 
-  boolean white;
+  boolean black;
 
-  BlackSquare(int x, int y, int size, boolean white) {
+  BlackSquare(int x, int y, int size, boolean black) {
     this.x = x;
     this.y = y;
     this.size = size;
 
-    this.white = white;
+    this.black = !black;
 
     // establish a random amount of food to start with
     this.food = random(500, 1000);
 
-    if (white) {
+    if (black) {
       this.col = 0;
     } else {
       this.col = 255;
@@ -27,11 +27,11 @@ class BlackSquare {
 
   void render() {
 
-    // if it is a black square
-    if (!this.white) {
+    // if it is not a black square
+    if (!this.black) {
 
       // reflect the amount of food
-      col = (int)map(this.food, 0, 1000, 0, 255);
+      col = (int)map(this.food, 0, 1000, 255, 0);
 
     }
 
@@ -40,13 +40,13 @@ class BlackSquare {
   }
 
   void update() {
-    if(!this.white && this.food > 0) {
+    if(!this.black && this.food > 0) {
       this.food--;
     }
   }
 
   void feed() {
-    if (!this.white && this.food < 1000) {
+    if (!this.black && this.food < 1000) {
       this.food += 10;
       
     }
