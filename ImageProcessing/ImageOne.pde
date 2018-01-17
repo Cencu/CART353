@@ -4,7 +4,7 @@ class ImageOne {
   float x;
   float y;
 
-  float rectSize;
+  int rectSize;
 
 
   ImageOne(float _x, float _y) {
@@ -19,16 +19,25 @@ class ImageOne {
   }
 
   void dispRect() {
-    float rectX = 50;
-    float rectY = 50;
-    float rectSize = 50;
+
+   /* int rectSize = 80;
     stroke(0);
     noFill();
     rectMode(CENTER);
-    rect(mouseX,mouseY,rectSize, rectSize);
+    rect(mouseX,mouseY,rectSize, rectSize);*/
   }
   
-  
+  void imageOpac() {
+    
+    int xstart = constrain(mouseX-rectSize/2,0,img.width); 
+  int ystart = constrain(mouseY-rectSize/2,0,img.height);
+  int xend = constrain(mouseX + rectSize/2,0,img.width);
+  int yend = constrain(mouseY + rectSize/2,0,img.height);
+  int matrixsize = 3;
+    
+   img.loadPixels(); 
+    
+  }
   
   
 }
