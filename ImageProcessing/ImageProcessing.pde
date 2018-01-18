@@ -19,8 +19,10 @@ void setup() {
 void draw() {
   background(255); 
   picture2.display();
+  picture2.sprayPaint();
 
   picture.display();
   picture.dispRect();
   picture.imageOpac();
+
 }

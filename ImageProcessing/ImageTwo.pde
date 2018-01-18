@@ -1,9 +1,9 @@
 class ImageTwo {
-  
+
   PImage img2;
   float x;
   float y;
-
+  float thisTint = 255;
   int rectSize;
 
 
@@ -15,11 +15,21 @@ class ImageTwo {
   }
 
   void display() {
-    img2.resize(640,280);
+    thisTint = constrain(thisTint, 255, 255);
+    tint(thisTint); 
+
+    img2.resize(640, 280);
+    img2.mask(img2);
+
     image(img2, x, y);
+    if (mousePressed) {
+    }
   }
-  
-  
-  
-  
+
+  void sprayPaint() {
+    if (key == 's' || key == 'S') {
+
+      ellipse(x, y, 30, 30);
+    }
+  }
 }

@@ -3,6 +3,10 @@ class ImageOne {
   PImage img;
   float x;
   float y;
+  float imgtint = 255;
+
+  float rectX;
+  float rectY;
 
   int rectSize;
 
@@ -15,29 +19,38 @@ class ImageOne {
   }
 
   void display() {
+    tint(255, imgtint);
+    imageMode(CORNER);
     image(img, x, y);
   }
 
   void dispRect() {
 
-   /* int rectSize = 80;
-    stroke(0);
-    noFill();
-    rectMode(CENTER);
-    rect(mouseX,mouseY,rectSize, rectSize);*/
+    rectX = int(random(img.width));
+    rectY = int(random(img.height));
+    int loc = mouseX + mouseY*img.width;
+    // Look up the RGB color in the source image
+    loadPixels();
+    float r = green(img.pixels[loc]);
+    float g = blue(img.pixels[loc]);
+    float b = red(img.pixels[loc]);
+
+    // Draw an ellipse at that location with that color
+    int rectSize = 80;
+    noStroke();
+    ellipseMode(CENTER);
+    fill(r, g, b, 100);    
+    ellipse(mouseX, mouseY, rectSize, rectSize);
   }
-  
+
   void imageOpac() {
-    
-    int xstart = constrain(mouseX-rectSize/2,0,img.width); 
-  int ystart = constrain(mouseY-rectSize/2,0,img.height);
-  int xend = constrain(mouseX + rectSize/2,0,img.width);
-  int yend = constrain(mouseY + rectSize/2,0,img.height);
-  int matrixsize = 3;
-    
-   img.loadPixels(); 
-    
+    if (mouseButton == LEFT) {
+      imgtint--;
+    }
+
+    if (mouseButton == RIGHT) {
+      imgtint++;
+    }
+    imgtint = constrain(imgtint, 20, 255);
   }
-  
-  
 }
