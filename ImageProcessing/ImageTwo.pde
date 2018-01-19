@@ -1,6 +1,7 @@
 class ImageTwo {
 
   PImage img2;
+
   float x;
   float y;
   float thisTint = 255;
@@ -27,9 +28,11 @@ class ImageTwo {
   }
 
   void sprayPaint() {
+    float eX = mouseX;
+    float eY = mouseY;
     if (key == 's' || key == 'S') {
 
-      ellipse(x, y, 30, 30);
+      ellipse(eX, eY, 30, 30);
     }
   }
 }

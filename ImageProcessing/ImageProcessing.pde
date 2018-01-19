@@ -3,17 +3,19 @@
  On click the opacity box can be turned off
  the space bar can spraypaint the pictures a light random color based on mouse location */
 
-
+PImage img;
 
 
 ImageOne picture;
 ImageTwo picture2;
+sprayPaint sprayPaint;
 
 void setup() {
   size(640, 280); 
 
   picture = new ImageOne(0, 0);
   picture2 = new ImageTwo(0, 0);
+  sprayPaint = new
 }
 
 void draw() {
