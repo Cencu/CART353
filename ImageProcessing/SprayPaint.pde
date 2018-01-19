@@ -2,7 +2,7 @@ class sprayPaint {
   
   float x; 
   float y; 
-  float spraySize;
+  float spraySize = 50;
   
   sprayPaint(float _x, float _y, float _size) {
    x = _x;
