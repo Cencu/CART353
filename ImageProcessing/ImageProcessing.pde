@@ -30,7 +30,9 @@ void draw() {
   for (int i = sprayPaints.size() -1; i >= 0; i--) {
    sprayPaint sprayPaint = sprayPaints.get(i); 
     sprayPaint.display();
-    
+    if (sprayPaint.fade()) {
+      sprayPaints.remove(i);
+    }
   }
 
 }
