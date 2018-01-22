@@ -5,6 +5,7 @@
 
 PImage img;
 float spraySize = 50;
+int j = 0;
 
 //Images Used
 ImageOne picture;
@@ -40,12 +41,16 @@ void draw() {
       sprayPaints.remove(i);
     }
   }
-
 }
 //When the spacebar is pressed, the spraypaints are added to the screen at the mouse location
 void keyPressed() {
  if (key == ' ') {
   sprayPaints.add(new sprayPaint(mouseX, mouseY, spraySize)); 
  }
-  
+ //If the S key is pressed, then the image will be saved
+  if(key == 's') {
+   String s = "img" + ".jpg";
+   save(s);
+   j++;
+  }
 }
