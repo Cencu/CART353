@@ -1,5 +1,8 @@
 class ImageOne {
-
+//Call all the variables
+//Call the images, X and Y are the locations for the image
+//Imgtint is the opacity of the first image
+//RectX and Y call the rectangle
   PImage img;
   float x;
   float y;
@@ -38,9 +41,9 @@ class ImageOne {
     // Draw an ellipse at that location with that color
     int rectSize = 80;
     noStroke();
-    ellipseMode(CENTER);
+    rectMode(CENTER);
     fill(r, g, b, 100);    
-    ellipse(mouseX, mouseY, rectSize, rectSize);
+    rect(mouseX, mouseY, rectSize, rectSize);
   }
 
   void imageOpac() {
