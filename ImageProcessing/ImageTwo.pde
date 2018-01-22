@@ -14,11 +14,11 @@ class ImageTwo {
     x = _x;
     y = _y;
   }
-
+//Constrains the tint of the second image
   void display() {
     thisTint = constrain(thisTint, 255, 255);
     tint(thisTint); 
-
+//Mask recreates the second image with an alpha mask
     img2.resize(640, 280);
     img2.mask(img2);
 
@@ -27,12 +27,5 @@ class ImageTwo {
     }
   }
 
-  void sprayPaint() {
-    float eX = mouseX;
-    float eY = mouseY;
-    if (key == 's' || key == 'S') {
-
-      ellipse(eX, eY, 30, 30);
-    }
-  }
+ 
 }

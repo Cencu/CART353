@@ -26,7 +26,6 @@ void draw() {
   background(255); 
   //Call the variables
   picture2.display();
-  picture2.sprayPaint();
 
   picture.display();
   picture.dispRect();

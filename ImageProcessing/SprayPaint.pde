@@ -20,7 +20,7 @@ class sprayPaint {
    fill(r,g,b, opac);
     ellipse(x,y,spraySize,spraySize);
   }
-  
+  //Changes the opactiy of the spraypaint and deletes them once their opacity reaches zero
   boolean fade() {
     opac--;
     if (opac < 0) {
