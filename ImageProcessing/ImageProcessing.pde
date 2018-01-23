@@ -1,7 +1,7 @@
-//What I want to do
-/*Create a box that changes opacity to reveal second picture
- On click the opacity box can be turned off
- the space bar can spraypaint the pictures a light random color based on mouse location */
+/*Left and right click to change alpha
+Spacebar to add spraypaints
+Mouse movement detects different colors based on image color
+S to sav */
 
 PImage img;
 float spraySize = 50;
