@@ -14,7 +14,7 @@ float[][] heights;
 //Used for mapping Z
 float zoff;
 
-//
+//The square for each pixel
 float cell;
 
 //Call the video class
@@ -113,11 +113,28 @@ void draw() {
       r = red (video.pixels[i+int(x)]);
       g = green (video.pixels[i+int(x)]);
       b = blue (video.pixels[i+int(x)]);
-      
+
       //Fill the cells with RGB
-      fill(r,g,b);
-      
+      fill(r, g, b);
+
+      //Add more transformations to the noise
       pushMatrix();
+
+      translate(i * cell, j * cell, 0);
+
+      //Add the shape in which the cells and video will be distributed
+      beginShape(QUADS);
+
+      //Add all four vertices of the quadrilateral 
+      vertex(0, 0, heights[i][j]);
+      vertex(cell, 0, heights[i+1][j]);
+      vertex(cell, cell, heights[i+1][j+1]);
+      vertex(0, cell, heights[i][j+1]);
+      //Endshape demonstrates an end to manipulating the quadrilateral
+      endShape();
+
+      popMatrix();
     }
   }
+  popMatrix();
 }
