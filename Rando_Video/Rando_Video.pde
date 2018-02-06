@@ -1,3 +1,7 @@
+//Intent: Using the example in class as a basis, I attempted to use gaussian distribution
+// to distribute the pixels based on color
+
+
 //Import two libraries that are needed
 import processing.video.*;
 import java.util.*; 
