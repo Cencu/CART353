@@ -25,6 +25,7 @@ void draw() {
   s.slip(t);
 
   t.update();
+  t.check();
   t.display();
   println(t.accel);
 }

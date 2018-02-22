@@ -42,4 +42,22 @@ class Tire {
     fill(12,17,50);
     ellipse(posi.x, posi.y, 48, 48);
   }
+  
+   void check() {
+
+    if (posi.x > width) {
+      posi.x = width;
+      velo.x *= -1;
+    } else if (posi.x < 0) {
+      posi.x = 0;
+      velo.x *= -1;
+    }
+
+    if (posi.y > height) {
+      velo.y *= -1;
+      velo.y = height;
+    }
+
+  }
+
 }

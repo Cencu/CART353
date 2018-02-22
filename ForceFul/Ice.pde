@@ -1,7 +1,7 @@
 class Ice {
 
   PVector posi;
-  float grip = .0;
+  float grip = .03;
   float limit =2;
 
 
@@ -15,14 +15,15 @@ class Ice {
   void slip(Tire tire) {
     PVector icy = tire.velo.get();
 
-
+    icy.mult(2);
+    icy.normalize();
+    icy.mult(grip);
     if (tire.posi.x >= 300 && tire.posi.x <= 550) {
       tire.applyForce(icy);
-    } else {
-      icy.mult(2);
-      icy.normalize();
-      icy.limit(2);
-    }
+    } 
+    icy.mult(2);
+    icy.normalize();
+    icy.mult(grip);
   }
 
 
