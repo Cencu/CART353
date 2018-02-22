@@ -46,11 +46,9 @@ class Tire {
    void check() {
 
     if (posi.x > width) {
-      posi.x = width;
-      velo.x *= -1;
-    } else if (posi.x < 0) {
       posi.x = 0;
-      velo.x *= -1;
+    } else if (posi.x < 0) {
+      posi.x = width;
     }
 
     if (posi.y > height) {
