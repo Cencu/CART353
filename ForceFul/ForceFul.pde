@@ -17,20 +17,12 @@ void setup() {
 
 void draw() {
   background(255); 
-  PVector forward = new PVector(0,.01);
-  PVector backwards = new PVector(0,-.01);
+
   //  Ice.slip(tire);
-  if (keyPressed && keyCode == RIGHT) {
-    
-  } else if (keyPressed && keyCode ==LEFT) {
-    t.accel();
-  } else {
-    t.accel();
-  }
+ 
 
   s.display();
   s.slip(t);
-
 
   t.update();
   t.display();
