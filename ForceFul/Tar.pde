@@ -1,6 +1,6 @@
 class Tar {
   PVector posi;
-  float grip = -.05;
+  float grip = -.07;
   
   Tar(float x, float y) {
     posi = new PVector(x,y);
@@ -13,7 +13,7 @@ class Tar {
     sticky.mult(2);
     sticky.normalize();
     sticky.mult(grip);
-    if (tire.posi.x >= 650 && tire.posi.x <= 850) {
+    if (tire.posi.x >= 650 && tire.posi.x <= 850 && tire.posi.y >= height-100) {
       tire.applyForce(sticky);
     } 
  

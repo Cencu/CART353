@@ -6,44 +6,51 @@ class Tire {
   PVector posi;
   float mass;
   float limit;
-  PVector forward = new PVector(0.02,0);
-  PVector backwards = new PVector(-0.02,0);
-
+  PVector forward = new PVector(0.02, 0);
+  PVector backwards = new PVector(-0.02, 0);
+  
   Tire() {
     mass = 1;
-    posi = new PVector(28, height-55);
+    posi = new PVector(40, height-40);
     velo = new PVector(0, 0);
     accel = new PVector(0, 0);
     limit = 10;
   }
 
-
+  void upstairs() {
+    if (keyCode == 'm' || keyCode == 'M') {
+      posi.y = height/3;
+    } else if (keyCode == 'd' || keyCode == 'D') {
+      posi.y = height-40;
+    }
+  }
 
 
   void applyForce(PVector force) {
-    PVector f = PVector.div(force,mass);
+    PVector f = PVector.div(force, mass);
     accel.add(f);
   }
-  
+
   void update() {
     if (keyPressed && keyCode == RIGHT) {
-    applyForce(forward);
+      applyForce(forward);
+   
     } else if (keyPressed && keyCode == LEFT) {
-     applyForce(backwards); 
+      applyForce(backwards);
     }
     velo.add(accel);
     posi.add(velo);
     accel.mult(0);
     velo.limit(limit);
   }
-  
+
   void display() {
     stroke(2);
-    fill(12,17,50);
+    fill(12, 17, 50);
     ellipse(posi.x, posi.y, 48, 48);
   }
-  
-   void check() {
+
+  void check() {
 
     if (posi.x > width) {
       posi.x = 0;
@@ -55,7 +62,5 @@ class Tire {
       velo.y *= -1;
       velo.y = height;
     }
-
   }
-
 }

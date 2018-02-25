@@ -1,7 +1,7 @@
 class Ice {
 
   PVector posi;
-  float grip = .03;
+  float grip = .029;
   float limit;
 
 
@@ -18,7 +18,7 @@ class Ice {
     icy.mult(2);
     icy.normalize();
     icy.mult(grip);
-    if (tire.posi.x >= 300 && tire.posi.x <= 550) {
+    if (tire.posi.x >= 300 && tire.posi.x <= 550 && tire.posi.y >= height-100) {
       tire.applyForce(icy);
     } 
  
