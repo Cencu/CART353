@@ -16,7 +16,7 @@ Tar tr;
 void setup() {
   size(1400, 800);
   t = new Tire();
-  mt = new Mtire();
+  mt = new Mtire(1);
   s = new Ice(300, 550);
   tr = new Tar(500, 750);
 }
@@ -33,11 +33,13 @@ void draw() {
   tr.stick(t);
   tr.display();
 
+  PVector f = mt.attract(t);
+  mt.update();
+  mt.applyForce(f);
+  mt.display();
+
   t.update();
   t.check();
   t.upstairs();
   t.display();
-  
-  mt.buildOn(t);
-  mt.display();
 }
