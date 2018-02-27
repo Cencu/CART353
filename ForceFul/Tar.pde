@@ -24,6 +24,7 @@ class Tar {
 
   void display() {
     fill(127);
+    imageMode(CORNER);
     image(tar, 650, 750, 250, 50);
   }
 }

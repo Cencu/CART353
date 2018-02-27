@@ -31,6 +31,7 @@ class Ice {
 
   void display() {
     fill(127);
+    imageMode(CORNER);
     image(ice, 300, 750, 250, 50);
   }
 }
