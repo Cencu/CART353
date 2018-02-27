@@ -32,10 +32,10 @@ void draw() {
 
   tr.stick(t);
   tr.display();
-
-  PVector f = mt.attract(t);
+  mt.nearby(t);
+ // PVector f = mt.attract(t);
   mt.update();
-  mt.applyForce(f);
+  //mt.applyForce(f);
   mt.display();
 
   t.update();

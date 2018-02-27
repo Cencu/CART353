@@ -20,8 +20,10 @@ class Tire {
   void upstairs() {
     if (keyCode == 'm' || keyCode == 'M') {
       posi.y = height/3;
+      posi.x = 40;
     } else if (keyCode == 'd' || keyCode == 'D') {
       posi.y = height-40;
+      posi.x = 40;
     }
   }
 
