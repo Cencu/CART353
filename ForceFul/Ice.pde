@@ -20,8 +20,7 @@ class Ice {
     icy.mult(grip);
     if (tire.posi.x >= 300 && tire.posi.x <= 550 && tire.posi.y >= height-100) {
       tire.applyForce(icy);
-    } 
- 
+    }
   }
 
 

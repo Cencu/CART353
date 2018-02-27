@@ -55,6 +55,6 @@ class Mtire {
   void display() {
     stroke(2);
     fill(12, 17, 50);
-    image(tire,posi.x, posi.y, 48, 48);
+    image(tire, posi.x, posi.y, 48, 48);
   }
 }

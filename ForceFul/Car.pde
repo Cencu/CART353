@@ -37,9 +37,8 @@ class Car {
 
 
   void update(Tire tire) {
-       if (keyPressed && keyCode == RIGHT && withinRadi == true) {
+    if (keyPressed && keyCode == RIGHT && withinRadi == true) {
       tire.applyForce(forward);
-   
     } else if (keyPressed && keyCode == LEFT && withinRadi == true) {
       tire.applyForce(backwards);
     }
@@ -49,8 +48,6 @@ class Car {
   }
 
   void display() {
-    stroke(2);
-    fill(12, 17, 50);
-    image(car,posi.x, posi.y, 175, 100);
+    image(car, posi.x, posi.y, 175, 100);
   }
 }

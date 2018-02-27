@@ -9,7 +9,8 @@ class Tire {
   PVector forward = new PVector(0.02, 0);
   PVector backwards = new PVector(-0.02, 0);
   PImage tire;
-  
+  float rot;
+
   Tire() {
     mass = 1;
     posi = new PVector(40, height-50);
@@ -38,7 +39,7 @@ class Tire {
   void update() {
     if (keyPressed && keyCode == RIGHT) {
       applyForce(forward);
-   
+      rot += .02;
     } else if (keyPressed && keyCode == LEFT) {
       applyForce(backwards);
     }
@@ -49,10 +50,10 @@ class Tire {
     println(velo);
   }
 
+
   void display() {
-    stroke(2);
-    fill(12, 17, 50);
-    image(tire,posi.x, posi.y, 48, 48);
+    image(tire, posi.x, posi.y, 48, 48);
+    println(posi.x, posi.y);
   }
 
   void check() {

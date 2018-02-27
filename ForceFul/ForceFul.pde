@@ -27,26 +27,22 @@ void setup() {
 void draw() {
   background(255); 
 
-  //  Ice.slip(tire);
-
   s.slip(t);
   s.display();
 
   tr.stick(t);
   tr.display();
+
   mt.nearby(t);
-  // PVector f = mt.attract(t);
   mt.update();
-  //mt.applyForce(f);
   mt.display();
 
-  
   t.update();
   t.check();
   t.upstairs();
   t.display();
+
   c.update(t);
   c.nearby(t);
   c.display();
-  
 }
