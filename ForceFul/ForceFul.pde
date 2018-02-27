@@ -20,7 +20,7 @@ void setup() {
   mt = new Mtire(1);
   s = new Ice(300, 550);
   tr = new Tar(500, 750);
-  c = new Car(800, height/3, 1);
+  c = new Car(800, height/3-55, 1);
 }
 
 
@@ -40,12 +40,13 @@ void draw() {
   //mt.applyForce(f);
   mt.display();
 
-  c.update(t);
-  c.nearby(t);
-  c.display();
   
   t.update();
   t.check();
   t.upstairs();
   t.display();
+  c.update(t);
+  c.nearby(t);
+  c.display();
+  
 }

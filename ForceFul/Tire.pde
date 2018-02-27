@@ -8,13 +8,15 @@ class Tire {
   float limit;
   PVector forward = new PVector(0.02, 0);
   PVector backwards = new PVector(-0.02, 0);
+  PImage tire;
   
   Tire() {
     mass = 1;
-    posi = new PVector(40, height-40);
+    posi = new PVector(40, height-50);
     velo = new PVector(0, 0);
     accel = new PVector(0, 0);
     limit = 10;
+    tire = loadImage("tire.png");
   }
 
   void upstairs() {
@@ -50,7 +52,7 @@ class Tire {
   void display() {
     stroke(2);
     fill(12, 17, 50);
-    ellipse(posi.x, posi.y, 48, 48);
+    image(tire,posi.x, posi.y, 48, 48);
   }
 
   void check() {

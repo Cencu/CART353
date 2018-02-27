@@ -7,12 +7,14 @@ class Car {
   boolean withinRadi = false;
   PVector forward = new PVector(0.04, 0);
   PVector backwards = new PVector(-0.04, 0);
+  PImage car;
 
   Car(float x, float y, float m) {
     posi =  new PVector(x, y);
     velo = new PVector(0, 0);
     accel = new PVector(0, 0);
     mass = 1;
+    car = loadImage("car.png");
   }
 
   void applyForce(PVector force) {
@@ -23,13 +25,13 @@ class Car {
 
 
   void nearby(Tire tire) {
-    if (posi.x < tire.posi.x -175 && posi. y == tire.posi.y) {
+    if (posi.x < tire.posi.x -175 && posi. y == tire.posi.y-55) {
       withinRadi = true;
     } 
     if (withinRadi == true) {
       println(withinRadi);
-      posi.x = tire.posi.x-175;
-      posi.y = tire.posi.y;
+      posi.x = tire.posi.x-110;
+      posi.y = tire.posi.y-40;
     }
   }
 
@@ -49,6 +51,6 @@ class Car {
   void display() {
     stroke(2);
     fill(12, 17, 50);
-    rect(posi.x, posi.y, 150, 48);
+    image(car,posi.x, posi.y, 175, 100);
   }
 }

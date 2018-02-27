@@ -4,6 +4,7 @@ class Mtire {
   PVector posi;
   float mass;
   float G;
+  PImage tire;
   boolean withinRadi = false;
 
   Mtire(float m) {
@@ -12,6 +13,7 @@ class Mtire {
     velo = new PVector(0, 0);
     mass = m;
     G=5;
+    tire = loadImage("tire.png");
   }
 
   void applyForce(PVector force) {
@@ -30,14 +32,14 @@ class Mtire {
   }
 
   void nearby(Tire tire) {
-    if (posi.x < tire.posi.x -200 && posi.y == tire.posi.y) {
+    if (posi.x < tire.posi.x -90 && posi.y == tire.posi.y) {
       withinRadi = true;
     } 
     if (withinRadi == true) {
 
       //PVector f = mt.attract(t);
       // mt.applyForce(f);
-      posi.x = tire.posi.x-200;
+      posi.x = tire.posi.x-90;
       tire.mass = 3;
       mass = 3;
       posi.y = tire.posi.y;
@@ -53,6 +55,6 @@ class Mtire {
   void display() {
     stroke(2);
     fill(12, 17, 50);
-    ellipse(posi.x, posi.y, 48, 48);
+    image(tire,posi.x, posi.y, 48, 48);
   }
 }
