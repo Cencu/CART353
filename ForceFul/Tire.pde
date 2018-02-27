@@ -44,6 +44,7 @@ class Tire {
     posi.add(velo);
     accel.mult(0);
     velo.limit(limit);
+    println(velo);
   }
 
   void display() {
