@@ -21,7 +21,7 @@ void setup() {
   mt = new Mtire(1);
   s = new Ice(300, 550);
   tr = new Tar(500, 750);
-  c = new Car(800, height/3-55, 1);
+  c = new Car(800, height/3-15, 1);
 }
 
 

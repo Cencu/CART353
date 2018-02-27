@@ -11,7 +11,8 @@ class Tire {
   //Acceleration going fowards and back
   PVector forward = new PVector(0.02, 0);
   PVector backwards = new PVector(-0.02, 0);
-  
+  float rot;
+
   PImage tire;
 
   Tire() {
@@ -40,7 +41,7 @@ class Tire {
     PVector f = PVector.div(force, mass);
     accel.add(f);
   }
-//When the left or right keys are pressed, the car moves
+  //When the left or right keys are pressed, the car moves
   void update() {
     if (keyPressed && keyCode == RIGHT) {
       applyForce(forward);
@@ -55,10 +56,15 @@ class Tire {
 
 
   void display() {
-    image(tire, posi.x, posi.y, 48, 48);
-    println(posi.x, posi.y);
+    rot += .03;
+    pushMatrix();
+    translate(posi.x, posi.y);
+    rotate(rot);
+    imageMode(CENTER);
+    image(tire, 0, 0, 48, 48);
+    popMatrix();
   }
-//Checks if the car has gone off screen
+  //Checks if the car has gone off screen
   void check() {
     if (posi.x > width) {
       posi.x = 0;

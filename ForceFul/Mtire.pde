@@ -1,5 +1,5 @@
 class Mtire {
-  
+
   PVector accel;
   PVector velo;
   PVector posi;
@@ -8,6 +8,8 @@ class Mtire {
   PImage tire;
   boolean withinRadi = false;
 
+  float rot;
+  
   Mtire(float m) {
     posi = new PVector(300, height/3);
     accel = new PVector(0, 0);
@@ -16,7 +18,7 @@ class Mtire {
     G=5;
     tire = loadImage("tire.png");
   }
-//Checks if the tire is nearby
+  //Checks if the tire is nearby
   void nearby(Tire tire) {
     if (posi.x < tire.posi.x -90 && posi.y == tire.posi.y) {
       withinRadi = true;
@@ -38,8 +40,12 @@ class Mtire {
   }
 
   void display() {
-    stroke(2);
-    fill(12, 17, 50);
-    image(tire, posi.x, posi.y, 48, 48);
+    rot += .03;
+    pushMatrix();
+    translate(posi.x, posi.y);
+    rotate(rot);
+    imageMode(CENTER);
+    image(tire, 0, 0, 48, 48);
+    popMatrix();
   }
 }

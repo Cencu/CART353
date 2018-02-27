@@ -25,12 +25,12 @@ class Car {
 
 //Checks if the car is nearby
   void nearby(Tire tire) {
-    if (posi.x < tire.posi.x -175 && posi. y == tire.posi.y-55) {
+    if (posi.x < tire.posi.x -45 && posi. y == tire.posi.y-15) {
       withinRadi = true;
     } //If it is then the boolean becomes true and the car body starts to follow
     if (withinRadi == true) {
-      posi.x = tire.posi.x-110;
-      posi.y = tire.posi.y-40;
+      posi.x = tire.posi.x-45;
+      posi.y = tire.posi.y-15;
     }
   }
 
@@ -47,6 +47,7 @@ class Car {
   }
 
   void display() {
+    imageMode(CENTER);
     image(car, posi.x, posi.y, 175, 100);
   }
 }
