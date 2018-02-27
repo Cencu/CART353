@@ -1,9 +1,11 @@
 class Tar {
   PVector posi;
   float grip = -.07;
-
+  PImage tar;
+  
   Tar(float x, float y) {
     posi = new PVector(x, y);
+    tar = loadImage("tar.jpg");
   }
 
   void stick(Tire tire) {
@@ -19,6 +21,6 @@ class Tar {
 
   void display() {
     fill(127);
-    rect(650, 500, 250, 400);
+    image(tar,650, 750, 250, 50);
   }
 }
