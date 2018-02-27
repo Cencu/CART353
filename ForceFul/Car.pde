@@ -1,13 +1,19 @@
 class Car {
-
+  
+  //PVectors of positions, speed and velocity
   PVector posi;
   PVector accel;
   PVector velo;
+  //Weight of the car
   float mass; 
+  //Check if the other tire is within the radius of the car
   boolean withinRadi = false;
+  //Acceleration/deacceleration
   PVector forward = new PVector(0.04, 0);
   PVector backwards = new PVector(-0.04, 0);
+  //Car image
   PImage car;
+
 
   Car(float x, float y, float m) {
     posi =  new PVector(x, y);
@@ -17,25 +23,18 @@ class Car {
     car = loadImage("car.png");
   }
 
-  void applyForce(PVector force) {
-    PVector f = PVector.div(force, mass/2);
-    accel.add(f);
-  }
-
-
-
+//Checks if the car is nearby
   void nearby(Tire tire) {
     if (posi.x < tire.posi.x -175 && posi. y == tire.posi.y-55) {
       withinRadi = true;
-    } 
+    } //If it is then the boolean becomes true and the car body starts to follow
     if (withinRadi == true) {
-      println(withinRadi);
       posi.x = tire.posi.x-110;
       posi.y = tire.posi.y-40;
     }
   }
 
-
+//When the boolean is true, the car starts to accelerate faster 
   void update(Tire tire) {
     if (keyPressed && keyCode == RIGHT && withinRadi == true) {
       tire.applyForce(forward);

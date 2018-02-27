@@ -1,4 +1,5 @@
 class Mtire {
+  
   PVector accel;
   PVector velo;
   PVector posi;
@@ -15,30 +16,14 @@ class Mtire {
     G=5;
     tire = loadImage("tire.png");
   }
-
-  void applyForce(PVector force) {
-    PVector f = PVector.div(force, mass);
-    accel.add(f);
-  }
-
-  PVector attract(Tire tire) {
-    PVector force = PVector.sub(tire.posi, posi);
-    float d = force.mag();
-    d = constrain(d, 5, 10);
-    force.normalize();
-    float strenght = (G * tire.mass *mass) / (d*d);
-    force.mult(strenght);
-    return force;
-  }
-
+//Checks if the tire is nearby
   void nearby(Tire tire) {
     if (posi.x < tire.posi.x -90 && posi.y == tire.posi.y) {
       withinRadi = true;
-    } 
+    } //If it is then this tire changes position
+    //Its mass increases, making the acceleration harder
     if (withinRadi == true) {
 
-      //PVector f = mt.attract(t);
-      // mt.applyForce(f);
       posi.x = tire.posi.x-90;
       tire.mass = 3;
       mass = 3;

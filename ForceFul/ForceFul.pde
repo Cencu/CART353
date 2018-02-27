@@ -1,20 +1,19 @@
-//What I want to do: demonstrate the effects of various 
-//Landscapes on a tire
-//Ice - Hard to stop, hard to accel-DONE
-//Tar - Very low speed-DONE
-//
-//Two stages M for magnesis, R for Road, M moves you up to experience the 
-//Magnetic effect
-//Tire and car on top, magnesis transforms the tire into a full car 
+//Forceful-Car assembly
+//Tire only-runs at a regular speed and mass
+//Two tires, slower acceleration, higher mass (no engine!)
+//car body- Engine included! car accelerates faster
+//Ice and tar, one land you slide and  one you slow down and can get stuck in
 
 
-//Our classes
+//Classes
 Tire t;
 Mtire mt;
 Ice s;
 Tar tr;
 Car c;
+
 void setup() {
+  //Call all the classes
   size(1400, 800);
   t = new Tire();
   mt = new Mtire(1);
