@@ -1,4 +1,6 @@
 //Forceful-Car assembly
+//Left and right keys to move
+//M and D to go up and down
 //Tire only-runs at a regular speed and mass
 //Two tires, slower acceleration, higher mass (no engine!)
 //car body- Engine included! car accelerates faster
