@@ -5,18 +5,23 @@ class RegLife {
   PVector velo;
   PVector accel;
   PVector size;
-  
+
   //Speed of the life forms
-  float speed = 2;
-  
+  float speed;
+
+  float wander;
+
+
   //create the object and specify its characteristics
   RegLife(float x, float y) {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
     velo = new PVector(0, 0);
     size = new PVector(30, 30);
+
+    speed = 1;
   }
-  
+
   //basic movement
   void update() {
     //Add the acceleration to the velocity
@@ -28,8 +33,54 @@ class RegLife {
     //Reset it after each loop
     accel.mult(0);
   }
-  
-  
-   
-  
+
+  void applyForce(PVector force) {
+    accel.add(force);
+  }
+
+  //Create a wandering method, which makes it seem like the object wanders about on the screen
+  void wander() {
+    //Wander radius
+    float wanderR = 25;
+    //Changes the motion and how the life form moves 
+    float wanderAmount = .05;
+    //Get the velocity and attribute it to the "new" position
+    PVector newPosi = velo.get();
+    //Set it to one and multiply it by the speed
+    newPosi.normalize();
+    newPosi.mult(speed);
+    //Add the position
+    newPosi.add(posi);
+    //change in position while wandering
+    wander += random(-wanderAmount, wanderAmount);
+    //use heading to calculate the rotation for the velocity
+    float h = velo.heading();
+    
+    //Create a new PVector adding these properties together
+    //Use sin and cos to attribute non-linear movements
+    //use heading and wander to attribute a random rotaion between the wander amound
+    PVector wanderO = new PVector(wanderR*cos(wander+h), wanderR*sin(wander+h));
+    //Create a target vector which adds the new position to the wander pvector
+    PVector target = PVector.add(newPosi, wanderO);
+    //apply seek to target
+    seek(target);
+  }
+//Add the target components to seek
+  void seek(PVector target) {
+    //desired is the PVector of the new position and the wandering effect
+    //subtracted by the position to point to the target
+    //Then set the scale to the speed
+    PVector desired = PVector.sub(target, posi);
+    desired.setMag(speed);
+    //Steer uses the mock position to create a target in which the life form
+    //Will follow using steer
+    PVector steer = PVector.sub(desired, velo);
+    steer.limit(.05);
+    applyForce(steer);
+  }
+
+  void display() {
+    fill(100, 100, 100);
+    ellipse(posi.x, posi.y, size.x, size.y);
+  }
 }

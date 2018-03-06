@@ -15,7 +15,7 @@ void setup() {
   //use a for loop to add the lives into the game
   //Specify their starting location
   for (int i = 0; i < rLife.size(); i++) {
-   rLife.add(new RegLife(width/2, height/2);
+   rLife.add(new RegLife(width/2, height/2));
   }
   
 }
@@ -25,6 +25,9 @@ void draw() {
   
   //use an enhanced for loop to loop through their properties
   for(RegLife r: rLife) {
+    r.update();
+    r.wander();
+    r.display();
     
   }
   
