@@ -83,37 +83,49 @@ class RegLife {
     applyForce(steer);
   }
 
+  //box around the ellipse but can be moved like the ellipse 
+
+
   void boundingBox() {
     //Create a radius for the box that the life form
     //Will be kept in
-    float radi = 450; 
+    PVector radi = new PVector(450, 450); 
     //Create an empty PVector
     PVector newPosi = null;
 
     //Checks all four sides and checks to see if the life form is touching any side
     //If it is then it adjusts the direction by creating a new PVector
     //With its speed and velocity changing
-    if (posi.x < radi) {
+    if (posi.x < radi.x) {
       newPosi = new PVector(speed, velo.y);
-    } else if (posi.x > width-radi) {
+    } else if (posi.x > width-radi.x) {
       newPosi = new PVector(-speed, velo.y);
     } 
-    if (posi.y < radi) {
+    if (posi.y < radi.y) {
       newPosi = new PVector(velo.x, speed);
-    } else if (posi.y > height-radi) {
+    } else if (posi.y > height-radi.y) {
       newPosi = new PVector(velo.x, -speed);
     }
     //If the new position PVector is not true, then continue as normal
     if (newPosi != null) {
+
       newPosi.normalize();
       newPosi.mult(speed);
       PVector steer = PVector.sub(newPosi, velo);
       steer.limit(speed);
       applyForce(steer);
     }
-    rectMode(CENTER);
+    if (dist(radi.x, radi.y, mouseX, mouseY) < radi.x/2 ) {
+      if (mousePressed) {
+        radi.x = mouseX;
+        radi.y = mouseY;
+      }
+    }
+
+    // rectMode(CENTER);
     noFill();
-    rect(width/2, height/2, width-radi*2, height-radi*2);
+    rect(radi.x, radi.y, width-450*2, height-450*2);
+    println(radi);
   }
 
   PVector detection(ArrayList<RegLife> rLife) {
@@ -138,24 +150,34 @@ class RegLife {
     }
     return sum;
   }
+  
+  void bound() {
+    PVector radi = new PVector(450, 450); 
+    float distb = PVector.dist(posi,radi);
+    float minDist = size.x;
+    if ((distb>0) && (distb <minDist)) {
+      velo.x = -velo.x;
+      velo.y = -velo.y;
+    }
+    
+  }
   //Use the arraylist again
   void createLife(ArrayList<RegLife> rLife) {
     //Call the PVector that detects the object
     PVector createLife = detection(rLife);
     if (withinAura == true) {
-      rLife.add(new RegLife(width/3,height/3));
+      rLife.add(new RegLife(width/3, height/3));
     }
   }
 
-void moveLife() {
- if (dist(posi.x,posi.y,mouseX,mouseY) < size.x/2) {
-    if(mousePressed) {
-      posi.x = mouseX;
-      posi.y = mouseY;
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
     }
- }
-  
-}
+  }
 
   void display() {
     fill(100, 100, 100);
