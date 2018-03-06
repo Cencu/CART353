@@ -48,14 +48,14 @@ class RegLife {
     PVector newPosi = velo.get();
     //Set it to one and multiply it by the speed
     newPosi.normalize();
-    newPosi.mult(speed);
+    newPosi.mult(80);
     //Add the position
     newPosi.add(posi);
     //change in position while wandering
     wander += random(-wanderAmount, wanderAmount);
     //use heading to calculate the rotation for the velocity
     float h = velo.heading();
-    
+
     //Create a new PVector adding these properties together
     //Use sin and cos to attribute non-linear movements
     //use heading and wander to attribute a random rotaion between the wander amound
@@ -65,7 +65,7 @@ class RegLife {
     //apply seek to target
     seek(target);
   }
-//Add the target components to seek
+  //Add the target components to seek
   void seek(PVector target) {
     //desired is the PVector of the new position and the wandering effect
     //subtracted by the position to point to the target
@@ -77,6 +77,38 @@ class RegLife {
     PVector steer = PVector.sub(desired, velo);
     steer.limit(.05);
     applyForce(steer);
+  }
+
+  void boundingBox() {
+    //Create a radius for the box that the life form
+    //Will be kept in
+    float radi = 450; 
+    //Create an empty PVector
+    PVector newPosi = null;
+
+    //Checks all four sides and checks to see if the life form is touching any side
+    //If it is then it adjusts the direction by creating a new PVector
+    //With its speed and velocity changing
+    if (posi.x < radi) {
+      newPosi = new PVector(speed, velo.y);
+    } else if (posi.x > width-radi) {
+      newPosi = new PVector(-speed, velo.y);
+    } if (posi.y < radi) {
+      newPosi = new PVector(velo.x, speed);
+    } else if (posi.y > height-radi) {
+      newPosi = new PVector(velo.x, -speed);
+    }
+    //If the new position PVector is not true, then continue as normal
+    if (newPosi != null) {
+      newPosi.normalize();
+      newPosi.mult(speed);
+      PVector steer = PVector.sub(newPosi,velo);
+      steer.limit(speed);
+      applyForce(steer);
+    }
+    rectMode(CENTER);
+    noFill();
+    rect(width/2,height/2,width-radi*2,height-radi*2);
   }
 
   void display() {

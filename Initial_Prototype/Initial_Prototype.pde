@@ -27,6 +27,7 @@ void draw() {
   for(RegLife r: rLife) {
     r.update();
     r.wander();
+    r.boundingBox();
     r.display();
     
   }
