@@ -40,7 +40,7 @@ void draw() {
     rLives.wander();
     //rLives.boundingBox();
     //rLives.bound();
-    // rLives.createLife(rLife);
+     rLives.createLife(rLife);
     rLives.moveLife();
     rLives.outOfBounds();
     rLives.display();

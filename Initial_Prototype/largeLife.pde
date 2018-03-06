@@ -113,6 +113,8 @@ class largeLife {
         if ((distb < r.posi.x) && (distb < minDist)) {
           withinAura = true;
           println(withinAura);
+        } else {
+         withinAura = false; 
         }
       
     }
