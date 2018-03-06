@@ -8,9 +8,13 @@ class RegLife {
 
   //Speed of the life forms
   float speed;
-
+  //Wandering of the life form
   float wander;
 
+  boolean withinAura;
+
+  //Call the array again to call objects in the class
+  ArrayList<RegLife> rLife;
 
   //create the object and specify its characteristics
   RegLife(float x, float y) {
@@ -18,7 +22,7 @@ class RegLife {
     accel = new PVector(0, 0);
     velo = new PVector(0, 0);
     size = new PVector(30, 30);
-
+    withinAura = false;
     speed = 1;
   }
 
@@ -93,7 +97,8 @@ class RegLife {
       newPosi = new PVector(speed, velo.y);
     } else if (posi.x > width-radi) {
       newPosi = new PVector(-speed, velo.y);
-    } if (posi.y < radi) {
+    } 
+    if (posi.y < radi) {
       newPosi = new PVector(velo.x, speed);
     } else if (posi.y > height-radi) {
       newPosi = new PVector(velo.x, -speed);
@@ -102,14 +107,55 @@ class RegLife {
     if (newPosi != null) {
       newPosi.normalize();
       newPosi.mult(speed);
-      PVector steer = PVector.sub(newPosi,velo);
+      PVector steer = PVector.sub(newPosi, velo);
       steer.limit(speed);
       applyForce(steer);
     }
     rectMode(CENTER);
     noFill();
-    rect(width/2,height/2,width-radi*2,height-radi*2);
+    rect(width/2, height/2, width-radi*2, height-radi*2);
   }
+
+  PVector detection(ArrayList<RegLife> rLife) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector sum = new PVector();
+
+    //Cycle through each object
+    for (RegLife r : rLife) {
+      //distance between the object and another object
+      //Of the same class
+      float distb = PVector.dist(posi, r.posi);
+      //Minimum distance is sizeX
+      float minDist = size.x;
+      //If the distance between the two objects is greater than 0
+      //and the distance between the two objects is less than sizeX
+      //Then the boolean becomes true
+      if ((distb > 0) && (distb < minDist)) {
+        withinAura = true;
+        println(withinAura);
+      }
+    }
+    return sum;
+  }
+  //Use the arraylist again
+  void createLife(ArrayList<RegLife> rLife) {
+    //Call the PVector that detects the object
+    PVector createLife = detection(rLife);
+    if (withinAura == true) {
+      rLife.add(new RegLife(width/3,height/3));
+    }
+  }
+
+void moveLife() {
+ if (dist(posi.x,posi.y,mouseX,mouseY) < size.x/2) {
+    if(mousePressed) {
+      posi.x = mouseX;
+      posi.y = mouseY;
+    }
+ }
+  
+}
 
   void display() {
     fill(100, 100, 100);
