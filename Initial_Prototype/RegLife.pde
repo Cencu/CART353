@@ -12,7 +12,8 @@ class RegLife {
   float wander;
 
   boolean withinAura;
-
+  
+  float health;
   //Call the array again to call objects in the class
   ArrayList<RegLife> rLife;
 
@@ -24,6 +25,7 @@ class RegLife {
     size = new PVector(30, 30);
     withinAura = false;
     speed = 1;
+    health = 100;
   }
 
   //basic movement
@@ -83,8 +85,24 @@ class RegLife {
     applyForce(steer);
   }
 
-  //box around the ellipse but can be moved like the ellipse 
-
+  void bound() {
+   float d = 0;
+   PVector force = new PVector(0,0);
+   
+   if (posi.x < d ) {
+    force.x = 1; 
+   } else if (posi.x > width - d) {
+    force.x = 1; 
+   } if (posi.y < d) {
+    force.y = 1;
+   } else if (posi.y > height -d) {
+    force.y = 1; 
+    
+   }
+   force.normalize();
+   force.mult(5);
+   applyForce(force);
+  }
 
   void boundingBox() {
     //Create a radius for the box that the life form
@@ -115,23 +133,14 @@ class RegLife {
       steer.limit(speed);
       applyForce(steer);
     }
-    if (dist(radi.x, radi.y, mouseX, mouseY) < radi.x/2 ) {
-      if (mousePressed) {
-        radi.x = mouseX;
-        radi.y = mouseY;
-      }
-    }
-
-    // rectMode(CENTER);
     noFill();
     rect(radi.x, radi.y, width-450*2, height-450*2);
-    println(radi);
   }
 
   PVector detection(ArrayList<RegLife> rLife) {
     //The PVector needs to return another PVector so
     //We create an empty one and return it at the end
-    PVector sum = new PVector();
+    PVector empty = new PVector();
 
     //Cycle through each object
     for (RegLife r : rLife) {
@@ -148,19 +157,9 @@ class RegLife {
         println(withinAura);
       }
     }
-    return sum;
+    return empty;
   }
   
-  void bound() {
-    PVector radi = new PVector(450, 450); 
-    float distb = PVector.dist(posi,radi);
-    float minDist = size.x;
-    if ((distb>0) && (distb <minDist)) {
-      velo.x = -velo.x;
-      velo.y = -velo.y;
-    }
-    
-  }
   //Use the arraylist again
   void createLife(ArrayList<RegLife> rLife) {
     //Call the PVector that detects the object
@@ -178,9 +177,22 @@ class RegLife {
       }
     }
   }
+  
+  void outOfBounds() {
+    
+  }
+  
+  boolean dead() {
+   if (health <0) {
+    return true; 
+   } else {
+    return false; 
+   }
+  }
 
   void display() {
-    fill(100, 100, 100);
+    fill(0,health);
     ellipse(posi.x, posi.y, size.x, size.y);
+   // println(health);
   }
 }
