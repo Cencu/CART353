@@ -155,7 +155,9 @@ class RegLife {
       if ((distb > 0) && (distb < minDist)) {
         withinAura = true;
         println(withinAura);
-      }
+      }else {
+     withinAura = false; 
+    }
     }
     return empty;
   }
@@ -166,7 +168,7 @@ class RegLife {
     PVector createLife = detection(rLife);
     if (withinAura == true) {
       rLife.add(new RegLife(width/3, height/3));
-    }
+    } 
   }
 
   void moveLife() {
