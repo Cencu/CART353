@@ -168,7 +168,9 @@ class RegLife {
     PVector createLife = detection(rLife);
     if (withinAura == true) {
       rLife.add(new RegLife(width/3, height/3));
-    } 
+    } else {
+     withinAura = false; 
+    }
   }
 
   void moveLife() {

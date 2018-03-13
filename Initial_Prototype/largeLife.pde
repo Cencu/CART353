@@ -85,63 +85,64 @@ class largeLife {
   }
 
   void findFood(ArrayList<RegLife> rLife) {
-      for (RegLife r : rLife) {
+    for (RegLife r : rLife) {
 
       PVector desired = PVector.sub(r.posi, posi);
       desired.setMag(speed);
 
       PVector steer = PVector.sub(desired, velo);
       applyForce(steer);
+    }
+  }
+  PVector detection(ArrayList<RegLife> rLife) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector sum = new PVector();
+
+    //Cycle through each object
+    for (RegLife r : rLife) {
+
+      //distance between the object and another object
+      //Of the same class
+      float distb = PVector.dist(posi, r.posi);
+      //Minimum distance is sizeX
+      float minDist = size.x;
+      //If the distance between the two objects is greater than 0
+      //and the distance between the two objects is less than sizeX
+      //Then the boolean becomes true
+      if ((distb < r.posi.x) && (distb < minDist)) {
+        withinAura = true;
+        println(withinAura);
+      } else {
+        withinAura = false;
       }
     }
-    PVector detection(ArrayList<RegLife> rLife) {
-      //The PVector needs to return another PVector so
-      //We create an empty one and return it at the end
-      PVector sum = new PVector();
+    return sum;
+  }
 
-      //Cycle through each object
-      for (RegLife r : rLife) {
-
-        //distance between the object and another object
-        //Of the same class
-        float distb = PVector.dist(posi, r.posi);
-        //Minimum distance is sizeX
-        float minDist = size.x;
-        //If the distance between the two objects is greater than 0
-        //and the distance between the two objects is less than sizeX
-        //Then the boolean becomes true
-        if ((distb < r.posi.x) && (distb < minDist)) {
-          withinAura = true;
-          println(withinAura);
-        } else {
-         withinAura = false; 
-        }
-      
-    }
-      return sum;
-    }
-
-    void eat(ArrayList<RegLife> rLife) {
-      PVector eat = detection(rLife);
+  void eat(ArrayList<RegLife> rLife) {
+    PVector eat = detection(rLife);
+    for (RegLife r : rLife) {
       if (withinAura == true) {
-        for (RegLife r : rLife) {
-          r.health--;
-        }
-      }
-    }
-
-    void display() {
-      fill(0, health);
-      //rectMode(CENTER);
-      ellipse(posi.x, posi.y, size.x, size.y);
-    }
-
-    void moveLife() {
-      if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
-        if (mousePressed) {
-          posi.x = mouseX;
-          posi.y = mouseY;
-        }
+        r.health--;
+      } else {
+       withinAura = false; 
       }
     }
   }
+
+  void display() {
+    fill(0, health);
+    //rectMode(CENTER);
+    ellipse(posi.x, posi.y, size.x, size.y);
+  }
+
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
+    }
+  }
+}
