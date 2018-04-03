@@ -71,7 +71,83 @@ class virus {
     }
   }
 
+PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector sum = new PVector(); 
+    //Cycle through each object
+    for (int i = 0; i < rLife.size(); i++) {
+      RegLife r = rLife.get(0);
+      //distance between the object and another object
+      float distb = PVector.dist(posi, r.posi);
+      //Minimum distance is sizeX
+      float minDist = r.size.x;
+      //If the distance between the two objects is greater than 0
+      //and the distance between the two objects is less than sizeX
+      //Then the boolean becomes true
+      if ((distb < r.posi.x) && (distb < minDist)) {
+        eating = true;
+      } else {
+        eating = false;
+      }
+    } 
+    return sum;
+  }
+  PVector detectionSmall(ArrayList<smallLife> sLife) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector sum = new PVector();
 
+    //Cycle through each object
+    for (int j = sLife.size()-1; j >= 0; j--) {
+      smallLife s = sLife.get(j);
+      //distance between the object and another object
+      float distbS = PVector.dist(posi, s.posi);
+      //Minimum distance is sizeX
+      float minDist = s.size.x;
+      //If the distance between the two objects is greater than 0
+      //and the distance between the two objects is less than sizeX
+      //Then the boolean becomes true
+      if ((distbS < s.posi.x) && (distbS < minDist)) {
+        eating = true;
+      } else {
+        eating = false;
+      }
+    }
+    return sum;
+  }
+
+  void eat(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
+    PVector eat = detection(rLife, sLife);
+    for (int i = rLife.size()-1; i >= 0; i--) {
+      RegLife r = rLife.get(0);
+      if (eating == true) {
+        r.health--;
+        r.health--;
+      } 
+      if (r.dead()) {
+        rLife.remove(0);
+      } else {
+        eating = false;
+      }
+    }
+  }
+
+  void eatSmall(ArrayList<smallLife> sLife) {
+    PVector eatSmall = detectionSmall(sLife);
+    for (int j = 0; j < sLife.size(); j++) {
+      smallLife s = sLife.get(0);
+      if (eating == true) {
+        s.health--;
+        s.health--;
+      } 
+      if (s.dead()) {
+        sLife.remove(0);
+      } else {
+        eating = false;
+      }
+    }
+  }
   
   
   
