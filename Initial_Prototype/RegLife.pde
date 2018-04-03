@@ -1,5 +1,4 @@
 class RegLife {
-
   //PVectors for location, velocity, acceleration and size
   PVector posi;
   PVector velo;
@@ -12,10 +11,14 @@ class RegLife {
   float wander;
 
   boolean withinAura;
-  
+  boolean placed;
+  float maxCreate;
+
   float health;
   //Call the array again to call objects in the class
   ArrayList<RegLife> rLife;
+  float createdLife = 30;
+  float mutation = 1;
 
   //create the object and specify its characteristics
   RegLife(float x, float y) {
@@ -24,12 +27,21 @@ class RegLife {
     velo = new PVector(0, 0);
     size = new PVector(30, 30);
     withinAura = false;
+    placed = false;
     speed = 1;
     health = 100;
+    maxCreate = 0;
   }
+
+
 
   //basic movement
   void update() {
+    if (health >= 5) {
+      placed = true;
+    } if (health > 1 && health < 4) {
+      placed = false;
+    }
     //Add the acceleration to the velocity
     velo.add(accel);
     //limit the velocity to the speed limit
@@ -86,22 +98,22 @@ class RegLife {
   }
 
   void bound() {
-   float d = 0;
-   PVector force = new PVector(0,0);
-   
-   if (posi.x < d ) {
-    force.x = 1; 
-   } else if (posi.x > width - d) {
-    force.x = 1; 
-   } if (posi.y < d) {
-    force.y = 1;
-   } else if (posi.y > height -d) {
-    force.y = 1; 
-    
-   }
-   force.normalize();
-   force.mult(5);
-   applyForce(force);
+    float d = 0;
+    PVector force = new PVector(0, 0);
+
+    if (posi.x < d ) {
+      force.x = 1;
+    } else if (posi.x > width - d) {
+      force.x = 1;
+    } 
+    if (posi.y < d) {
+      force.y = 1;
+    } else if (posi.y > height -d) {
+      force.y = 1;
+    }
+    force.normalize();
+    force.mult(5);
+    applyForce(force);
   }
 
   void boundingBox() {
@@ -143,7 +155,8 @@ class RegLife {
     PVector empty = new PVector();
 
     //Cycle through each object
-    for (RegLife r : rLife) {
+   for (RegLife r : rLife) {
+
       //distance between the object and another object
       //Of the same class
       float distb = PVector.dist(posi, r.posi);
@@ -154,23 +167,43 @@ class RegLife {
       //Then the boolean becomes true
       if ((distb > 0) && (distb < minDist)) {
         withinAura = true;
-        println(withinAura);
-      }else {
-     withinAura = false; 
-    }
+      } else {
+        withinAura = false;
+      }
     }
     return empty;
   }
-  
+
   //Use the arraylist again
   void createLife(ArrayList<RegLife> rLife) {
     //Call the PVector that detects the object
     PVector createLife = detection(rLife);
-    if (withinAura == true) {
-      rLife.add(new RegLife(width/3, height/3));
+    if ( withinAura == true && mousePressed == false && random(mutation) <=.8) {
+      rLife.add(new RegLife(random(width), random(height)));
+      println(maxCreate);
+      maxCreate += 1;
+      createdLife +=300;
+      withinAura = false;
+    } 
+    if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
+      lLife.add(new largeLife(random(width), random(height)));
+      println(maxCreate);
+      maxCreate += 1;
+      createdLife +=300;
+      withinAura = false;
     } else {
-     withinAura = false; 
+      withinAura = false;
     }
+       if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
+      sLife.add(new smallLife(random(width), random(height)));
+      println(maxCreate);
+      maxCreate += 1;
+      createdLife +=300;
+      withinAura = false;
+    } else {
+      withinAura = false;
+    }
+  
   }
 
   void moveLife() {
@@ -181,22 +214,22 @@ class RegLife {
       }
     }
   }
-  
+
   void outOfBounds() {
-    
   }
-  
+
   boolean dead() {
-   if (health <0) {
-    return true; 
-   } else {
-    return false; 
-   }
+
+    if (health <= 0.0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void display() {
-    fill(0,health);
+    fill(createdLife, health);
     ellipse(posi.x, posi.y, size.x, size.y);
-   // println(health);
+    // println(health);
   }
 }
