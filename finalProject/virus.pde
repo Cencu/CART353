@@ -152,8 +152,10 @@ class virus {
   void display() {
     fill(255, 0, 0, health);
     //rectMode(CENTER);
-    triangle(posi.x-10, posi.y-40, posi.x-20, posi.y, posi.x, posi.y);
-    triangle(posi.x+10, posi.y-40, posi.x, posi.y, posi.x+20, posi.y);
+    triangle(posi.x-25, posi.y-40, posi.x-20, posi.y+10, posi.x, posi.y-10);
+    triangle(posi.x+25, posi.y-40, posi.x, posi.y-10, posi.x+20, posi.y+10);
+    line(posi.x+30, posi.y-50, posi.x+25, posi.y-37);
+    line(posi.x-30, posi.y-50, posi.x-25, posi.y-37);
   }
 
 
