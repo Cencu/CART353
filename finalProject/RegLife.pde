@@ -128,5 +128,68 @@ class RegLife {
     noFill();
     rect(radi.x, radi.y, width-450*2, height-450*2);
   }
-  
+   PVector detection(ArrayList<RegLife> rLife) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector empty = new PVector();
+
+    //Cycle through each object
+    for (RegLife r : rLife) {
+
+      //distance between the object and another object
+      //Of the same class
+      float distb = PVector.dist(posi, r.posi);
+      //Minimum distance is sizeX
+      float minDist = size.x;
+      //If the distance between the two objects is greater than 0
+      //and the distance between the two objects is less than sizeX
+      //Then the boolean becomes true
+      if ((distb > 0) && (distb < minDist)) {
+        withinAura = true;
+      } else {
+        withinAura = false;
+      }
+    }
+    return empty;
+  }
+
+  //Use the arraylist again
+  void createLife(ArrayList<RegLife> rLife) {
+    //Call the PVector that detects the object
+    PVector createLife = detection(rLife);
+    if ( withinAura == true && mousePressed == false && random(mutation) <=.8) {
+      rLife.add(new RegLife(random(width), random(height)));
+      withinAura = false;
+      p = 255;
+    } 
+    if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
+      lLife.add(new largeLife("lLife", random(width), random(height), 116));
+      withinAura = false;
+      p = 255;
+    } 
+    if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
+      sLife.add(new smallLife(random(width), random(height)));
+      p = 255;
+    }
+  }
+
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
+    }
+  }
+
+
+
+  boolean dead() {
+
+    if (health < 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
