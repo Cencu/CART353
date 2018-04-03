@@ -114,7 +114,7 @@ class largeLife {
       if ( r == 1); 
       {
         foundVirus = true;
-        speed = 5;
+        speed = 4;
         break;
       }
     } 

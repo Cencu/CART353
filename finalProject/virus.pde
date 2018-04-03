@@ -11,15 +11,28 @@ class virus {
   boolean withinAura;
   boolean eating;
 
+  PImage[] images;
+  int imageCount;
+  int frame;
 
-  virus(float x, float y) {
+
+  virus(String imagePrefix, float x, float y, int count) {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
     velo = new PVector(0, 0);
     size = new PVector(20, 20);
-    speed = 4;
+    speed = 8;
     withinAura = false;
-    health = 300;
+    health = 500;
+
+    imageCount = count;
+    images = new PImage[imageCount];
+
+    for (int i = 0; i < imageCount; i++) {
+      // Use nf() to number format 'i' into four digits
+      String filename = imagePrefix + nf(i, 4) + ".png";
+      images[i] = loadImage(filename);
+    }
   }
 
   //basic movement
@@ -124,6 +137,8 @@ class virus {
       if (eating == true) {
         r.health--;
         r.health--;
+        r.health--;
+        health+=.02;
       } 
       if (r.dead()) {
         rLife.remove(0);
@@ -140,6 +155,8 @@ class virus {
       if (eating == true) {
         s.health--;
         s.health--;
+        s.health--;
+        health+=.02;
       } 
       if (s.dead()) {
         sLife.remove(0);
@@ -151,14 +168,30 @@ class virus {
 
   void display() {
     fill(255, 0, 0, health);
+    float theta = velo.heading() + radians(90);
+
     //rectMode(CENTER);
+    //pushMatrix();
+    //translate(width/3,height/3);
+    //rotate(theta);
     triangle(posi.x-25, posi.y-40, posi.x-20, posi.y+10, posi.x, posi.y-10);
     triangle(posi.x+25, posi.y-40, posi.x, posi.y-10, posi.x+20, posi.y+10);
     line(posi.x+30, posi.y-50, posi.x+25, posi.y-37);
     line(posi.x-30, posi.y-50, posi.x-25, posi.y-37);
+    frame = (frame+1) % imageCount;
+    imageMode(CENTER);
+    image(images[frame], posi.x, posi.y-50, size.x+40, size.y);
+    //popMatrix();
   }
 
-
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
+    }
+  }
 
   boolean dead() {
 

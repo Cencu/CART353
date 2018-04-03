@@ -30,10 +30,12 @@ float r;
 boolean placed = false;
 float rV;
 
-void setup(){
- size(1000,1000);
- 
- 
+float maxPlaced = 0;
+
+void setup() {
+  size(1000, 1000);
+
+
   //create the arraylist's in the setup
   rLife = new ArrayList<RegLife>();
 
@@ -46,7 +48,7 @@ void setup(){
   lLife = new ArrayList<largeLife>();
 
   for (int i = 0; i < lLife.size(); i++) {
-    lLife.add(new largeLife("lLife",width/2, height/2,1));
+    lLife.add(new largeLife("lLife", width/2, height/2, 116));
   }
 
   sLife = new ArrayList<smallLife>();
@@ -57,16 +59,14 @@ void setup(){
   v = new ArrayList<virus>();
 
   for (int i = 0; i < v.size(); i++) {
-    v.add (new virus(width/3, height/3));
+    v.add (new virus("virus", width/3, height/3, 9));
   }
   aC = new additionalContent();
-  
- 
 }
 
 void draw() {
   background(255);
-  
+  println(maxPlaced);
   //use an enhanced for loop to loop through their properties
   for (int r = 0; r < rLife.size(); r ++) {
     RegLife rLives = rLife.get(r);
@@ -122,31 +122,38 @@ void draw() {
     vrus.eat(rLife, sLife);
     vrus.eatSmall(sLife);
     vrus.offScreen();
+    vrus.moveLife();
     vrus.display();
   }
-  
+
   aC.timer();
-  
+
   rV = 5000;
   r = floor(random(0, rV));
   if (r == 1) {
-    v.add(new virus(width/3, height/3));
+    v.add(new virus("virus", width/3, height/3, 9));
   } else {
     return;
   }
 }
 
 void keyPressed() {
-  if (key == 'r' || key == 'R') {
-    rLife.add(new RegLife(width/2, height/2));
-  }
-  if (key == 'l' || key == 'L') {
-    lLife.add(new largeLife("lLife",width/2, height/2,116));
-  }
-  if (key == 's' || key == 'S') {
-    sLife.add(new smallLife(width/2, height/2));
+  if (maxPlaced <= 15) {
+
+    if (key == 'r' || key == 'R') {
+      rLife.add(new RegLife(width/2, height/2));
+      maxPlaced +=1;
+    }
+    if (key == 'l' || key == 'L') {
+      lLife.add(new largeLife("lLife", width/2, height/2, 116));
+      maxPlaced +=1;
+    }
+    if (key == 's' || key == 'S') {
+      sLife.add(new smallLife(width/2, height/2));
+      maxPlaced +=1;
+    }
   }
   if (key == 'v' || key == 'V') {
-    v.add(new virus(width/3, height/3));
+    v.add(new virus("virus", width/3, height/3, 9));
   }
 }
