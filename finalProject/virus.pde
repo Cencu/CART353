@@ -149,7 +149,37 @@ PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
     }
   }
   
-  
+  void display() {
+    fill(255, 0, 0, health);
+    //rectMode(CENTER);
+    ellipse(posi.x, posi.y, size.x, size.y);
+  }
+
+
+
+  boolean dead() {
+
+    if (health <= 0.0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void offScreen() {
+    if (posi.x > width+10 ) {
+      posi.x = -10;
+    } 
+    if (posi.x < -10) {
+      posi.x = width;
+    } 
+    if (posi.y > height+10) {
+      posi.y = -10;
+    } 
+    if (posi.y < -10) {
+      posi.y = height;
+    }
+  }
   
   
   
