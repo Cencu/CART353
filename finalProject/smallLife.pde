@@ -92,7 +92,42 @@ class smallLife {
     applyForce(steer);
   }
   
-  
+   void display() {
+    fill(0, 0, 255, health);
+    //rectMode(CENTER);
+    ellipse(posi.x, posi.y, size.x, size.y);
+  }
+
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
+    }
+  }
+  boolean dead() {
+    if (health < 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void offScreen() {
+    if (posi.x > width+10 ) {
+      posi.x = -10;
+    } 
+    if (posi.x < -10) {
+      posi.x = width;
+    } 
+    if (posi.y > height+10) {
+      posi.y = -10;
+    } 
+    if (posi.y < -10) {
+      posi.y = height;
+    }
+  }
   
   
   
