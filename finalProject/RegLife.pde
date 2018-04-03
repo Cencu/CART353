@@ -128,6 +128,7 @@ class RegLife {
     noFill();
     rect(radi.x, radi.y, width-450*2, height-450*2);
   }
+  
    PVector detection(ArrayList<RegLife> rLife) {
     //The PVector needs to return another PVector so
     //We create an empty one and return it at the end
@@ -192,4 +193,73 @@ class RegLife {
       return false;
     }
   }
+  
+   void runFromVirus(ArrayList<virus> v) {
+    for (int i = 0; i < v.size(); i++) {
+      virus vr = v.get(i);
+
+
+      PVector desired = PVector.sub(posi, vr.posi);
+      desired.setMag(speed);
+
+      PVector steer = PVector.sub(desired, velo);
+      applyForce(steer);
+    }
+  }
+
+  void offScreen() {
+    if (posi.x > width+10 ) {
+      posi.x = -10;
+    } 
+    if (posi.x < -10) {
+      posi.x = width;
+    } 
+    if (posi.y > height+10) {
+      posi.y = -10;
+    } 
+    if (posi.y < -10) {
+      posi.y = height;
+    }
+  }
+
+  void display() {
+    float t = posi.heading() *radians(90);
+    noStroke();
+    fill(127);
+    rectMode(CENTER);    
+    rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
+    stroke(2);  
+    pushMatrix();
+    translate(-15, -40);
+
+    float rot = (random(cos(theta))*10);
+    float rot2 = (random(cos(theta))*20);
+    float rot3 = (random(cos(theta))*20);
+
+    theta += 50;
+
+    line(posi.x+40, posi.y+10+rot, posi.x+30, posi.y+10);//TOP RIGHT
+    line(posi.x+40, posi.y+20+rot, posi.x+30, posi.y+20);//TOP RIGHT 2
+    line(posi.x+40, posi.y+30+rot, posi.x+30, posi.y+30);//TOP RIGHT 3
+    line(posi.x+40, posi.y+40+rot, posi.x+30, posi.y+40);//MIDDLE
+    line(posi.x+40, posi.y+50+rot, posi.x+30, posi.y+50);//MIDDLE 2
+    line(posi.x+40, posi.y+60+rot, posi.x+30, posi.y+60);//BOTTOM
+    line(posi.x+40, posi.y+70+rot, posi.x+30, posi.y+70);//BOTTOM2
+    //LEFT SIDE
+    line(posi.x, posi.y+10, posi.x-10, posi.y+10+rot);//TOP LEFT
+    line(posi.x, posi.y+20, posi.x-10, posi.y+20+rot);//TOP LEFT
+    line(posi.x, posi.y+30, posi.x-10, posi.y+30+rot);//TOP LEFT 3
+    line(posi.x, posi.y+40, posi.x-10, posi.y+40+rot);//MIDDLE
+    line(posi.x, posi.y+50, posi.x-10, posi.y+50+rot);//MIDDLE 2
+    line(posi.x, posi.y+60, posi.x-10, posi.y+60+rot);//BOTTOM
+    line(posi.x, posi.y+70, posi.x-10, posi.y+70+rot);//BOTTOM2
+
+    //ANTENNAS
+    line(posi.x-10-rot2, posi.y-20+rot2, posi.x+10, posi.y+2);//;EFT
+    line(posi.x+40+rot3, posi.y-20+rot3, posi.x+20, posi.y+2);//RIGHT
+    popMatrix();
+  }
+  
+  
+  
 }
