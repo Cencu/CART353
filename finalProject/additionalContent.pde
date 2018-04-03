@@ -17,6 +17,7 @@ class additionalContent {
 
 
   void timer() {
+
     seconds = millis()/1000;
     mins = millis()/1000/60;
     displayTimeS = seconds-restartSec;
@@ -24,7 +25,9 @@ class additionalContent {
     if (seconds % 60 == 0) {
       restartSec = seconds; 
       displayTimeS = startSec;
+      
     }
+      
     textAlign(CENTER);
     fill(0);
     textSize(25);
@@ -38,7 +41,7 @@ class additionalContent {
       RegLife r = rLife.get(i);
       text("Regular Lives" +" " + nf(regPlaced+r.created, 2), 50, 50);
     }
-      text("Small Lives" + " " + nf(smallPlaced, 2), 45, 70);
-      text("Large Lives" + " " + nf(largePlaced, 2), 45, 90);
-    }
+    text("Small Lives" + " " + nf(smallPlaced, 2), 45, 70);
+    text("Large Lives" + " " + nf(largePlaced, 2), 45, 90);
   }
+}

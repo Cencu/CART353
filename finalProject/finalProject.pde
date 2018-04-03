@@ -25,10 +25,13 @@ ArrayList<smallLife> sLife;
 ArrayList<virus> v;
 additionalContent aC;
 
+Sprite avatar;
+StopWatch times = new StopWatch();
+float avatarSpeed =1;
 
 float r;
 boolean placed = false;
-float rV;
+float rV = 5000;
 
 int maxPlaced = 0;
 int regPlaced = 0;
@@ -38,7 +41,8 @@ int largePlaced = 0;
 void setup() {
   size(1000, 1000);
 
-
+  avatar = new Sprite(this, "reglife.png", 24, 1, 1);
+  avatar.setFrameSequence(0, 1);
   //create the arraylist's in the setup
   rLife = new ArrayList<RegLife>();
 
@@ -70,9 +74,14 @@ void setup() {
 void draw() {
   background(255);
   println(maxPlaced);
+
   //use an enhanced for loop to loop through their properties
   for (int r = 0; r < rLife.size(); r ++) {
     RegLife rLives = rLife.get(r);
+    double deltaTime = times.getElapsedTime();
+    S4P.updateSprites(deltaTime);
+    S4P.drawSprites();
+    avatar.setFrameSequence(24, 5, .1);
     rLives.dead();
 
     rLives.update();
@@ -131,7 +140,6 @@ void draw() {
 
   aC.timer();
   aC.lifeList(rLife);
-  rV = 5000;
   r = floor(random(0, rV));
   if (r == 1) {
     v.add(new virus("virus", width/3, height/3, 9));

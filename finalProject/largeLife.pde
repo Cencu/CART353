@@ -1,5 +1,5 @@
 class largeLife {
-  
+
   //PVectors for location, velocity, acceleration and size
   PVector posi;
   PVector velo;
@@ -42,9 +42,9 @@ class largeLife {
       images[i] = loadImage(filename);
     }
   }
-  
-  
-  
+
+
+
   //basic movement
   void update() {
     println(health);
@@ -63,8 +63,8 @@ class largeLife {
   void applyForce(PVector force) {
     accel.add(force);
   }
-  
-   //Create a wandering method, which makes it seem like the object wanders about on the screen
+
+  //Create a wandering method, which makes it seem like the object wanders about on the screen
   void wander() {
     //Wander radius
     float wanderR = 25;
@@ -104,8 +104,8 @@ class largeLife {
     steer.limit(1);
     applyForce(steer);
   }
-  
-  
+
+
   void findFood(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife, ArrayList<virus> v) {
     boolean foundSmall = false;
     boolean foundVirus= false;
@@ -148,14 +148,13 @@ class largeLife {
       }
     } 
     if (!foundSmall && !foundVirus) {
-      {
-        for (int i = 0; i < rLife.size(); i++) {
-          RegLife r = rLife.get(0);
-          PVector desired = PVector.sub(r.posi, posi);
-          desired.setMag(speed);
-          PVector steer = PVector.sub(desired, velo);
-          applyForce(steer);
-        }
+        speed = 1;
+      for (int i = 0; i < rLife.size(); i++) {
+        RegLife r = rLife.get(0);
+        PVector desired = PVector.sub(r.posi, posi);
+        desired.setMag(speed);
+        PVector steer = PVector.sub(desired, velo);
+        applyForce(steer);
       }
     }
   }
@@ -220,7 +219,7 @@ class largeLife {
       } 
       if (vs.dead()) {
         v.remove(0);
-        health += 300;
+        health += 100;
       } else {
         eating = false;
       }
@@ -232,7 +231,8 @@ class largeLife {
       RegLife r = rLife.get(0);
 
       if (eating == true) {
-        r.health--;
+        r.health-=.04;
+        health+=.03;
       } 
       if (r.dead()) {
         rLife.remove(0);
@@ -273,7 +273,7 @@ class largeLife {
     for (int j = 0; j < sLife.size(); j++) {
       smallLife s = sLife.get(0);
       if (eatingS == true) {
-        s.health-=.02;
+        s.health-=.04;
         health += .03;
       } 
       if (s.dead()) {
@@ -284,8 +284,8 @@ class largeLife {
     }
   }
 
-  
-   void display() {
+
+  void display() {
     fill(0, health);
     //rectMode(CENTER);
     ellipse(posi.x-50, posi.y+50, size.x-30, size.y-30);//BOTTOM LEFT
@@ -325,8 +325,8 @@ class largeLife {
   int getWidth() {
     return images[0].width;
   }
-  
-    boolean dead() {
+
+  boolean dead() {
     if (health < 1) {
       return true;
     } else {
@@ -338,10 +338,7 @@ class largeLife {
       largeLife lLives = lLife.get(l);
       if (dead()) {
         lLife.remove(l);
-      } 
+      }
     }
   }
-  
-  
-  
 }

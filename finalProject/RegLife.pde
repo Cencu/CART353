@@ -21,6 +21,9 @@ class RegLife {
   float theta = 0.0;
   int created =0;
 
+  PImage bacteria;
+
+
   RegLife(float x, float y) {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
@@ -30,6 +33,7 @@ class RegLife {
     placed = false;
     speed = 1;
     health = 200;
+    bacteria = loadImage("reglife.png");
   }
   //basic movement
   void update() {
@@ -170,11 +174,13 @@ class RegLife {
       withinAura = false;
       eliS.x = 0;
       eliS.y = 0;
+      largePlaced += 1;
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       sLife.add(new smallLife(random(width), random(height)));
       eliS.x = 0;
       eliS.y = 0;
+      smallPlaced += 1;
     }
   }
 
@@ -234,7 +240,10 @@ class RegLife {
     noStroke();
     fill(127);
     rectMode(CENTER);    
-    rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
+    imageMode(CENTER);
+    avatar.setXY(posi.x, posi.y);
+    bacteria.resize(20,20);
+    //rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
     stroke(1);
     ellipse(posi.x, posi.y, eliS.x, eliS.y);
     stroke(2);  

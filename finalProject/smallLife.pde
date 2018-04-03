@@ -30,6 +30,7 @@ class smallLife {
   
    //basic movement
   void update() {
+    println(health);
     health -= .02;
     if (health >= 5) {
       placed = true;
