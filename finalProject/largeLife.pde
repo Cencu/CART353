@@ -45,6 +45,24 @@ class largeLife {
   
   
   
+  //basic movement
+  void update() {
+    println(health);
+    health -=.02;
+    health = constrain(health, 0, 500);
+    //Add the acceleration to the velocity
+    velo.add(accel);
+    //limit the velocity to the speed limit
+    velo.limit(speed);
+    //add the position to the velocity
+    posi.add(velo);
+    //Reset it after each loop
+    accel.mult(0);
+  }
+
+  void applyForce(PVector force) {
+    accel.add(force);
+  }
   
   
   
