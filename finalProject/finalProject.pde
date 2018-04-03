@@ -30,7 +30,10 @@ float r;
 boolean placed = false;
 float rV;
 
-float maxPlaced = 0;
+int maxPlaced = 0;
+int regPlaced = 0;
+int smallPlaced = 0;
+int largePlaced = 0;
 
 void setup() {
   size(1000, 1000);
@@ -127,7 +130,7 @@ void draw() {
   }
 
   aC.timer();
-
+  aC.lifeList(rLife);
   rV = 5000;
   r = floor(random(0, rV));
   if (r == 1) {
@@ -143,14 +146,17 @@ void keyPressed() {
     if (key == 'r' || key == 'R') {
       rLife.add(new RegLife(width/2, height/2));
       maxPlaced +=1;
+      regPlaced +=1;
     }
     if (key == 'l' || key == 'L') {
       lLife.add(new largeLife("lLife", width/2, height/2, 116));
       maxPlaced +=1;
+      largePlaced +=1;
     }
     if (key == 's' || key == 'S') {
       sLife.add(new smallLife(width/2, height/2));
       maxPlaced +=1;
+      smallPlaced +=1;
     }
   }
   if (key == 'v' || key == 'V') {

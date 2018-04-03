@@ -4,7 +4,7 @@ class RegLife {
   PVector velo;
   PVector accel;
   PVector size;
-
+  PVector eliS = new PVector(30, 30);
   //Speed of the life forms
   float speed;
   //Wandering of the life form
@@ -12,7 +12,6 @@ class RegLife {
 
   boolean withinAura;
   boolean placed;
-  float maxCreate;
 
   float health;
   //Call the array again to call objects in the class
@@ -20,6 +19,7 @@ class RegLife {
   float p;
   float mutation = 1;
   float theta = 0.0;
+  int created =0;
 
   RegLife(float x, float y) {
     posi = new PVector(x, y);
@@ -29,11 +29,11 @@ class RegLife {
     withinAura = false;
     placed = false;
     speed = 1;
-    health = 500;
-    maxCreate = 0;
+    health = 200;
   }
   //basic movement
   void update() {
+    println(health);
     health-=.02;
     if (health >= 5) {
       placed = true;
@@ -50,7 +50,7 @@ class RegLife {
     //Reset it after each loop
     accel.mult(0);
   }
-  
+
   void applyForce(PVector force) {
     accel.add(force);
   }
@@ -95,8 +95,8 @@ class RegLife {
     steer.limit(.05);
     applyForce(steer);
   }
-  
-   void boundingBox() {
+
+  void boundingBox() {
     //Create a radius for the box that the life form
     //Will be kept in
     PVector radi = new PVector(450, 450); 
@@ -128,8 +128,8 @@ class RegLife {
     noFill();
     rect(radi.x, radi.y, width-450*2, height-450*2);
   }
-  
-   PVector detection(ArrayList<RegLife> rLife) {
+
+  PVector detection(ArrayList<RegLife> rLife) {
     //The PVector needs to return another PVector so
     //We create an empty one and return it at the end
     PVector empty = new PVector();
@@ -161,16 +161,20 @@ class RegLife {
     if ( withinAura == true && mousePressed == false && random(mutation) <=.8) {
       rLife.add(new RegLife(random(width), random(height)));
       withinAura = false;
-      p = 255;
+      created +=1;
+      eliS.x = 0;
+      eliS.y = 0;
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       lLife.add(new largeLife("lLife", random(width), random(height), 116));
       withinAura = false;
-      p = 255;
+      eliS.x = 0;
+      eliS.y = 0;
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       sLife.add(new smallLife(random(width), random(height)));
-      p = 255;
+      eliS.x = 0;
+      eliS.y = 0;
     }
   }
 
@@ -188,13 +192,15 @@ class RegLife {
   boolean dead() {
 
     if (health < 1) {
+      regPlaced-=1;
+
       return true;
     } else {
       return false;
     }
   }
-  
-   void runFromVirus(ArrayList<virus> v) {
+
+  void runFromVirus(ArrayList<virus> v) {
     for (int i = 0; i < v.size(); i++) {
       virus vr = v.get(i);
 
@@ -223,11 +229,14 @@ class RegLife {
   }
 
   void display() {
+
     float t = posi.heading() *radians(90);
     noStroke();
     fill(127);
     rectMode(CENTER);    
     rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
+    stroke(1);
+    ellipse(posi.x, posi.y, eliS.x, eliS.y);
     stroke(2);  
     pushMatrix();
     translate(-15, -40);
@@ -259,7 +268,4 @@ class RegLife {
     line(posi.x+40+rot3, posi.y-20+rot3, posi.x+20, posi.y+2);//RIGHT
     popMatrix();
   }
-  
-  
-  
 }
