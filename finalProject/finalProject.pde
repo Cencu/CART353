@@ -121,7 +121,6 @@ void draw() {
     vrus.findFood(rLife, sLife);
     vrus.eat(rLife, sLife);
     vrus.eatSmall(sLife);
-    vrus.moveLife();
     vrus.offScreen();
     vrus.display();
   }

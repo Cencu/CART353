@@ -22,7 +22,7 @@ class virus {
     health = 300;
   }
 
-   //basic movement
+  //basic movement
   void update() {
     println(health);
 
@@ -40,7 +40,7 @@ class virus {
     accel.add(force);
   }
 
-  
+
   void findFood(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
     boolean foundReg = false;
     for (int i = 0; i < rLife.size(); i++) {
@@ -71,7 +71,7 @@ class virus {
     }
   }
 
-PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
+  PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
     //The PVector needs to return another PVector so
     //We create an empty one and return it at the end
     PVector sum = new PVector(); 
@@ -148,11 +148,12 @@ PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
       }
     }
   }
-  
+
   void display() {
     fill(255, 0, 0, health);
     //rectMode(CENTER);
-    ellipse(posi.x, posi.y, size.x, size.y);
+    triangle(posi.x-10, posi.y-40, posi.x-20, posi.y, posi.x, posi.y);
+    triangle(posi.x+10, posi.y-40, posi.x, posi.y, posi.x+20, posi.y);
   }
 
 
@@ -180,9 +181,4 @@ PVector detection(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
       posi.y = height;
     }
   }
-  
-  
-  
-  
-  
 }
