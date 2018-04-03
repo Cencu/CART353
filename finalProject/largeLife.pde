@@ -285,7 +285,62 @@ class largeLife {
   }
 
   
+   void display() {
+    fill(0, health);
+    //rectMode(CENTER);
+    ellipse(posi.x-50, posi.y+50, size.x-30, size.y-30);//BOTTOM LEFT
+    ellipse(posi.x+50, posi.y-50, size.x-30, size.y-30);//TOP RIGHT
+    ellipse(posi.x-50, posi.y-50, size.x-30, size.y-30);//TOP LEFT
+    ellipse(posi.x+50, posi.y+50, size.x-30, size.y-30);//BOTTOM RIGHT
+    ellipse(posi.x+55, posi.y, size.x-30, size.y-30);//MIDDLE RIGHT
+    ellipse(posi.x-55, posi.y, size.x-30, size.y-30);//MIDDLE RIGHT
+    imageMode(CENTER);
+    frame = (frame+1) % imageCount;
+
+    image(images[frame], posi.x, posi.y, size.x+50, size.y); //CENTER
+  }
+
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
+      }
+    }
+  }
+  void offScreen() {
+    if (posi.x > width+10 ) {
+      posi.x = -10;
+    } 
+    if (posi.x < -10) {
+      posi.x = width;
+    } 
+    if (posi.y > height+10) {
+      posi.y = -10;
+    } 
+    if (posi.y < -10) {
+      posi.y = height;
+    }
+  }
+  int getWidth() {
+    return images[0].width;
+  }
   
+    boolean dead() {
+    if (health < 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  void died() {
+    for (int l = 0; l < lLife.size(); l++ ) {
+      largeLife lLives = lLife.get(l);
+      if (dead()) {
+        lLife.remove(l);
+      } 
+    }
+  }
   
   
   
