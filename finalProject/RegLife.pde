@@ -96,6 +96,37 @@ class RegLife {
     applyForce(steer);
   }
   
-  
+   void boundingBox() {
+    //Create a radius for the box that the life form
+    //Will be kept in
+    PVector radi = new PVector(450, 450); 
+    //Create an empty PVector
+    PVector newPosi = null;
+
+    //Checks all four sides and checks to see if the life form is touching any side
+    //If it is then it adjusts the direction by creating a new PVector
+    //With its speed and velocity changing
+    if (posi.x < radi.x) {
+      newPosi = new PVector(speed, velo.y);
+    } else if (posi.x > width-radi.x) {
+      newPosi = new PVector(-speed, velo.y);
+    } 
+    if (posi.y < radi.y) {
+      newPosi = new PVector(velo.x, speed);
+    } else if (posi.y > height-radi.y) {
+      newPosi = new PVector(velo.x, -speed);
+    }
+    //If the new position PVector is not true, then continue as normal
+    if (newPosi != null) {
+
+      newPosi.normalize();
+      newPosi.mult(speed);
+      PVector steer = PVector.sub(newPosi, velo);
+      steer.limit(speed);
+      applyForce(steer);
+    }
+    noFill();
+    rect(radi.x, radi.y, width-450*2, height-450*2);
+  }
   
 }
