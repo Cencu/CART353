@@ -73,7 +73,7 @@ void setup() {
 
 void draw() {
   background(255);
-  println(maxPlaced);
+ // println(maxPlaced);
 
   //use an enhanced for loop to loop through their properties
   for (int r = 0; r < rLife.size(); r ++) {
@@ -82,6 +82,7 @@ void draw() {
     S4P.updateSprites(deltaTime);
     S4P.drawSprites();
     avatar.setFrameSequence(24, 5, .1);
+
     rLives.dead();
 
     rLives.update();
@@ -139,8 +140,10 @@ void draw() {
   }
 
   aC.timer();
-  aC.lifeList(rLife);
+  aC.lifeList();
   r = floor(random(0, rV));
+  rV -=.02;
+  //println(rV);
   if (r == 1) {
     v.add(new virus("virus", width/3, height/3, 9));
   } else {

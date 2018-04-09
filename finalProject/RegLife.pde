@@ -33,11 +33,11 @@ class RegLife {
     placed = false;
     speed = 1;
     health = 200;
-    bacteria = loadImage("reglife.png");
+    // bacteria = loadImage("reglife.png");
   }
   //basic movement
   void update() {
-    println(health);
+    //println(health);
     health-=.02;
     if (health >= 5) {
       placed = true;
@@ -236,29 +236,25 @@ class RegLife {
 
   void display() {
 
-    float t = posi.heading() *radians(90);
+    float t = velo.heading();
+    println(t);
     noStroke();
     fill(127);
     rectMode(CENTER);    
     imageMode(CENTER);
-    avatar.setXY(posi.x, posi.y);
-    bacteria.resize(20,20);
-    //rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
-    stroke(1);
-    ellipse(posi.x, posi.y, eliS.x, eliS.y);
     stroke(2);  
     pushMatrix();
-    translate(-15, -40);
+    translate(posi.x,posi.y);
 
     float rot = (random(cos(theta))*10);
     float rot2 = (random(cos(theta))*20);
     float rot3 = (random(cos(theta))*20);
 
     theta += 50;
-
-    line(posi.x+40, posi.y+10+rot, posi.x+30, posi.y+10);//TOP RIGHT
-    line(posi.x+40, posi.y+20+rot, posi.x+30, posi.y+20);//TOP RIGHT 2
-    line(posi.x+40, posi.y+30+rot, posi.x+30, posi.y+30);//TOP RIGHT 3
+    rotate(t);
+    line(40, 10+rot, 30, 10);//TOP RIGHT
+    line(40, 20+rot, 30, 20);//TOP RIGHT 2
+    line(40, 30+rot, 30, 30);//TOP RIGHT 3
     line(posi.x+40, posi.y+40+rot, posi.x+30, posi.y+40);//MIDDLE
     line(posi.x+40, posi.y+50+rot, posi.x+30, posi.y+50);//MIDDLE 2
     line(posi.x+40, posi.y+60+rot, posi.x+30, posi.y+60);//BOTTOM
@@ -276,5 +272,17 @@ class RegLife {
     line(posi.x-10-rot2, posi.y-20+rot2, posi.x+10, posi.y+2);//;EFT
     line(posi.x+40+rot3, posi.y-20+rot3, posi.x+20, posi.y+2);//RIGHT
     popMatrix();
+    pushMatrix();
+    translate(posi.x, posi.y);
+    rotate(t);
+    //rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
+
+    avatar.setRot(t);
+    avatar.setXY(posi.x, posi.y);
+
+    popMatrix();
+    // avatar
+    stroke(1);
+    ellipse(posi.x, posi.y, eliS.x, eliS.y);
   }
 }

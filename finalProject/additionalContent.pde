@@ -35,12 +35,11 @@ class additionalContent {
   }
 
 
-  void lifeList(ArrayList <RegLife> rLife) {
+  void lifeList() {
     textSize(10);
-    for (int i = 0; i < rLife.size(); i++) {
-      RegLife r = rLife.get(i);
-      text("Regular Lives" +" " + nf(regPlaced+r.created, 2), 50, 50);
-    }
+ 
+      text("Regular Lives" +" " + nf(regPlaced, 2), 50, 50);
+    
     text("Small Lives" + " " + nf(smallPlaced, 2), 45, 70);
     text("Large Lives" + " " + nf(largePlaced, 2), 45, 90);
   }
