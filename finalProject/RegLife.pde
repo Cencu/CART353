@@ -244,35 +244,6 @@ class RegLife {
     imageMode(CENTER);
     stroke(2);  
     pushMatrix();
-    translate(posi.x,posi.y);
-
-    float rot = (random(cos(theta))*10);
-    float rot2 = (random(cos(theta))*20);
-    float rot3 = (random(cos(theta))*20);
-
-    theta += 50;
-    rotate(t);
-    line(40, 10+rot, 30, 10);//TOP RIGHT
-    line(40, 20+rot, 30, 20);//TOP RIGHT 2
-    line(40, 30+rot, 30, 30);//TOP RIGHT 3
-    line(posi.x+40, posi.y+40+rot, posi.x+30, posi.y+40);//MIDDLE
-    line(posi.x+40, posi.y+50+rot, posi.x+30, posi.y+50);//MIDDLE 2
-    line(posi.x+40, posi.y+60+rot, posi.x+30, posi.y+60);//BOTTOM
-    line(posi.x+40, posi.y+70+rot, posi.x+30, posi.y+70);//BOTTOM2
-    //LEFT SIDE
-    line(posi.x, posi.y+10, posi.x-10, posi.y+10+rot);//TOP LEFT
-    line(posi.x, posi.y+20, posi.x-10, posi.y+20+rot);//TOP LEFT
-    line(posi.x, posi.y+30, posi.x-10, posi.y+30+rot);//TOP LEFT 3
-    line(posi.x, posi.y+40, posi.x-10, posi.y+40+rot);//MIDDLE
-    line(posi.x, posi.y+50, posi.x-10, posi.y+50+rot);//MIDDLE 2
-    line(posi.x, posi.y+60, posi.x-10, posi.y+60+rot);//BOTTOM
-    line(posi.x, posi.y+70, posi.x-10, posi.y+70+rot);//BOTTOM2
-
-    //ANTENNAS
-    line(posi.x-10-rot2, posi.y-20+rot2, posi.x+10, posi.y+2);//;EFT
-    line(posi.x+40+rot3, posi.y-20+rot3, posi.x+20, posi.y+2);//RIGHT
-    popMatrix();
-    pushMatrix();
     translate(posi.x, posi.y);
     rotate(t);
     //rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
@@ -281,8 +252,38 @@ class RegLife {
     avatar.setXY(posi.x, posi.y);
 
     popMatrix();
+    pushMatrix();
+    translate(posi.x, posi.y);
+
+    float rot = (random(cos(theta))*10);
+    float rot2 = (random(cos(theta))*20);
+    float rot3 = (random(cos(theta))*20);
+
+    theta += 50;
+    rotate(t);
+    line(30, -20+rot, 20, -20);//TOP RIGHT 1
+    //line(40, -30+rot, 20, -30);//TOP RIGHT 2
+    line(30, -10+rot, 20, -10);//TOP RIGHT 3
+    line(30, 0+rot, 15, 0);//MIDDLE
+    line(30, 10+rot, 10, 10);//MIDDLE 2
+    line(30, 20+rot, 5, 20);//BOTTOM
+    line(30, 30+rot, 2, 30);//BOTTOM2
+    //LEFT SIDE
+    line(-10, -20, -30, -20+rot);//TOP LEFT
+    line(-10, -10, -30, -10+rot);//TOP LEFT
+    line(-10, 0, -30, 0+rot);//TOP LEFT 3
+    line(-10, 10, -30, 10+rot);//MIDDLE
+    line(-10, 20, -30, 20+rot);//MIDDLE 2
+    line(-10, 30, -30, 30+rot);//BOTTOM
+    //line(-10, 40, -30, 40+rot);//BOTTOM2
+
+    //ANTENNAS
+    line(-20-rot2, -60+rot2, 0, -35);//;EFT
+    line(30+rot3, -60+rot3, 15, -35);//RIGHT
+    popMatrix();
+
     // avatar
     stroke(1);
-    ellipse(posi.x, posi.y, eliS.x, eliS.y);
+    //ellipse(posi.x, posi.y, eliS.x, eliS.y);
   }
 }
