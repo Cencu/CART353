@@ -15,7 +15,8 @@ class virus {
   int imageCount;
   int frame;
 
-
+  //create the object and specify its characteristics
+  //the name of the images in the data folder, excluding the .png
   virus(String imagePrefix, float x, float y, int count) {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
@@ -24,12 +25,16 @@ class virus {
     speed = 8;
     withinAura = false;
     health = 350;
-
+    //the image count equals the count
     imageCount = count;
+    //create the array of images
     images = new PImage[imageCount];
-
+    //use a for loop to go through all the images
     for (int i = 0; i < imageCount; i++) {
       // Use nf() to number format 'i' into four digits
+      //use the string and change it to the prefix, which is the name of the files, add the numbers corresponding to the images also 
+      //They go up by 0000 0001 etc... then add the .png
+      //load the array of images
       String filename = imagePrefix + nf(i, 4) + ".png";
       images[i] = loadImage(filename);
     }
@@ -55,24 +60,29 @@ class virus {
 
 
   void findFood(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
+    //The virus prioritizes regular lives
+    //So the boolean starts out as false
+    //we then go through the array of lives
     boolean foundReg = false;
     for (int i = 0; i < rLife.size(); i++) {
       RegLife r = rLife.get(0);
+      //if its placed then we break out of the for loop
       if (r.placed) {
         foundReg = true;
         break;
       }
-    } 
+    } //If we found regular lives on the screen then we go through another loop
     if (foundReg) {
       for (int i = 0; i < rLife.size(); i++) {
         RegLife r = rLife.get(0);
+        //We take the position of both forms and subtract them
         PVector desired = PVector.sub(r.posi, posi);
         desired.setMag(speed);
-
+        //we take the two positions and apply the steer PVector 
         PVector steer = PVector.sub(desired, velo);
         applyForce(steer);
       }
-    } else {
+    } else { //If there is no regular lives then we search for small lives 
       for (int j = 0; j < sLife.size(); j++) {
         smallLife s = sLife.get(0);
         PVector desired = PVector.sub(s.posi, posi);
@@ -129,7 +139,9 @@ class virus {
     }
     return sum;
   }
-
+//method used to eat the other lives 
+//goes through both life forms
+//deplete the lives at a very fast rate
   void eat(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
     PVector eat = detection(rLife, sLife);
     for (int i = rLife.size()-1; i >= 0; i--) {
@@ -170,10 +182,8 @@ class virus {
 
   void display() {
     fill(255, 0, 0, health);
-    //float t = velo.heading();
     pushMatrix();
     translate(posi.x, posi.y);
-    //rotate(t-10);
     triangle(-25, -40, -20, +10, 0, -10);
     triangle(25, -40, 0, -10, 20, 10);
     line(30, -50, 25, -37);
