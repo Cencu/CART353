@@ -33,7 +33,6 @@ class smallLife {
     if (health < 50 && health > 49) {
       lLifeHunger.play();
     } 
-    println(health);
     health -= .02;
     if (health >= 5) {
       placed = true;

@@ -100,7 +100,6 @@ class player {
   void display() {
     float t = velo.heading() + radians(90);  
 
-    println(moving);
     fill(0, 0, 255);
     float mov = 20;
     if (goLeft||goRight||goUp||goDown) {

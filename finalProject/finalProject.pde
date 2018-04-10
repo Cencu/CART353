@@ -225,7 +225,6 @@ void keyPressed() {
   
   if (keyCode == LEFT) {
     pl.goLeft = true;
-    println("hey");
   }
   if (keyCode == RIGHT) {
     pl.goRight = true;
