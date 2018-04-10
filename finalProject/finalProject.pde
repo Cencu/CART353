@@ -18,7 +18,7 @@ ArrayList<smallLife> sLife;
 ArrayList<virus> v;
 //Extras put in the game
 additionalContent aC;
-
+player pl;
 
 //Sprites class for small and regular lives
 Sprite avatar;
@@ -87,6 +87,7 @@ void setup() {
   }
   
   aC = new additionalContent();
+  pl = new player(width/2,height/2);
 //Load in all the sound files
 //Changed the amplitude because they were too loud
   rLifedeplete = new SoundFile(this, "rLifedeplete.wav");
@@ -181,6 +182,11 @@ void draw() {
 
   aC.timer();
   aC.lifeList();
+  
+  pl.display();
+  pl.movement();
+  pl.moveLife(rLife, sLife, lLife);
+  pl.offScreen();
 //A way of spawning in the virus at random times
 //If r lands on 1 then a virus spawns in 
 //R chooses a random number between 0 and 5000
@@ -216,7 +222,41 @@ void keyPressed() {
       sLifeSpawn.play();
     }
   }
+  
+  if (keyCode == LEFT) {
+    pl.goLeft = true;
+    println("hey");
+  }
+  if (keyCode == RIGHT) {
+    pl.goRight = true;
+  }
+  if (keyCode == UP) {
+    pl.goUp = true;
+  }
+  if (keyCode == DOWN) {
+   pl.goDown = true; 
+  } if (keyCode == SHIFT) {
+   pl.shifted = true; 
+  }
+
+  
   if (key == 'v' || key == 'V') {
     v.add(new virus("virus", width/3, height/3, 9));
   }
+}
+
+void keyReleased() {
+  if (keyCode == LEFT) {
+   pl.goLeft = false; 
+  } if (keyCode == RIGHT) {
+    pl.goRight = false;
+  } if (keyCode == UP) {
+   pl.goUp = false; 
+  }  if (keyCode == DOWN) {
+   pl.goDown = false; 
+  }if (keyCode == SHIFT) {
+   pl.shifted = false; 
+  }
+  
+  
 }
