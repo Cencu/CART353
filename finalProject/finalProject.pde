@@ -151,6 +151,7 @@ void draw() {
 
   aC.timer();
   aC.lifeList();
+
   r = floor(random(0, rV));
   rV -=.02;
   if (r == 1) {

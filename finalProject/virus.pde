@@ -137,7 +137,6 @@ class virus {
       if (eating == true) {
         r.health--;
         r.health--;
-        r.health--;
         health+=.02;
       } 
       if (r.dead()) {
@@ -168,10 +167,10 @@ class virus {
 
   void display() {
     fill(255, 0, 0, health);
-    float t = velo.heading();
+    //float t = velo.heading();
     pushMatrix();
     translate(posi.x,posi.y);
-    rotate(t);
+    //rotate(t-10);
     triangle(-25, -40, -20, +10, 0, -10);
     triangle(25, -40, 0, -10, 20, 10);
     line(30, -50, 25, -37);

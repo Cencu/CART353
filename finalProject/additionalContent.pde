@@ -25,9 +25,8 @@ class additionalContent {
     if (seconds % 60 == 0) {
       restartSec = seconds; 
       displayTimeS = startSec;
-      
     }
-      
+
     textAlign(CENTER);
     fill(0);
     textSize(25);
@@ -37,9 +36,7 @@ class additionalContent {
 
   void lifeList() {
     textSize(10);
- 
-      text("Regular Lives" +" " + nf(regPlaced, 2), 50, 50);
-    
+      text("Regular Lives" + " "+ nf(maxPlaced, 2), 50, 50);
     text("Small Lives" + " " + nf(smallPlaced, 2), 45, 70);
     text("Large Lives" + " " + nf(largePlaced, 2), 45, 90);
   }

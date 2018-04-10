@@ -36,6 +36,7 @@ class RegLife {
   }
   //basic movement
   void update() {
+    println(health);
     health-=.04;
     if (health >= 5) {
       placed = true;
@@ -230,6 +231,13 @@ class RegLife {
     if (posi.y < -10) {
       posi.y = height;
     }
+  }
+  
+  void addedLives() {
+       textSize(10);
+
+      text("Regular Lives (Created)" + " "+ nf(created, 2), 70, 30);
+     
   }
 
   void display() {
