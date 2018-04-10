@@ -4,7 +4,6 @@ class RegLife {
   PVector velo;
   PVector accel;
   PVector size;
-  PVector eliS = new PVector(30, 30);
   //Speed of the life forms
   float speed;
   //Wandering of the life form
@@ -15,14 +14,11 @@ class RegLife {
 
   float health;
   //Call the array again to call objects in the class
+  
   ArrayList<RegLife> rLife;
-  float p;
   float mutation = 1;
   float theta = 0.0;
   int created =0;
-
-  PImage bacteria;
-
 
   RegLife(float x, float y) {
     posi = new PVector(x, y);
@@ -36,11 +32,18 @@ class RegLife {
   }
   //basic movement
   void update() {
-    println(health);
+    //if the health gets low then the life form tells you its hungry
+    //if the health is between 49 and 50 then it plays the sound
+    if (health < 50 && health > 49) {
+      lLifeHunger.play();
+    } 
+    //Health decreases at a constant rate
     health-=.04;
+    //checks if the life form is placed
     if (health >= 5) {
       placed = true;
     } 
+    //If the life form has really low health then it will be delted 
     if (health > 1 && health < 4) {
       placed = false;
     }
@@ -68,7 +71,7 @@ class RegLife {
     PVector newPosi = velo.get();
     //Set it to one and multiply it by the speed
     newPosi.normalize();
-    newPosi.mult(80);
+    newPosi.mult(1);
     //Add the position
     newPosi.add(posi);
     //change in position while wandering
@@ -97,39 +100,6 @@ class RegLife {
     PVector steer = PVector.sub(desired, velo);
     steer.limit(.05);
     applyForce(steer);
-  }
-
-  void boundingBox() {
-    //Create a radius for the box that the life form
-    //Will be kept in
-    PVector radi = new PVector(450, 450); 
-    //Create an empty PVector
-    PVector newPosi = null;
-
-    //Checks all four sides and checks to see if the life form is touching any side
-    //If it is then it adjusts the direction by creating a new PVector
-    //With its speed and velocity changing
-    if (posi.x < radi.x) {
-      newPosi = new PVector(speed, velo.y);
-    } else if (posi.x > width-radi.x) {
-      newPosi = new PVector(-speed, velo.y);
-    } 
-    if (posi.y < radi.y) {
-      newPosi = new PVector(velo.x, speed);
-    } else if (posi.y > height-radi.y) {
-      newPosi = new PVector(velo.x, -speed);
-    }
-    //If the new position PVector is not true, then continue as normal
-    if (newPosi != null) {
-
-      newPosi.normalize();
-      newPosi.mult(speed);
-      PVector steer = PVector.sub(newPosi, velo);
-      steer.limit(speed);
-      applyForce(steer);
-    }
-    noFill();
-    rect(radi.x, radi.y, width-450*2, height-450*2);
   }
 
   PVector detection(ArrayList<RegLife> rLife) {
@@ -161,28 +131,27 @@ class RegLife {
   void createLife(ArrayList<RegLife> rLife) {
     //Call the PVector that detects the object
     PVector createLife = detection(rLife);
+    //Checks if the player isnt forcibly grabbing the objects around to reproduce
+    //has a random chance of mutation if the number returns less that 8
     if ( withinAura == true && mousePressed == false && random(mutation) <=.8) {
       rLife.add(new RegLife(random(width), random(height)));
       withinAura = false;
       created +=1;
-      eliS.x = 0;
-      eliS.y = 0;
+      rLifeSpawn.play();
     } 
+    
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       lLife.add(new largeLife("lLife", random(width), random(height), 116));
       withinAura = false;
-      eliS.x = 0;
-      eliS.y = 0;
       largePlaced += 1;
+      lLifespawn.play();
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       sLife.add(new smallLife(random(width), random(height)));
-      eliS.x = 0;
-      eliS.y = 0;
       smallPlaced += 1;
     }
   }
-
+//Use mouse to move the lives
   void moveLife() {
     if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
       if (mousePressed) {
@@ -193,38 +162,27 @@ class RegLife {
   }
 
 
-
+//If the life has no more health than the boolean returns false and the life
+//Gets removed
   boolean dead() {
-
     if (health < 1) {
       regPlaced-=1;
-
       return true;
     } else {
       return false;
     }
   }
-
-  void runFromVirus(ArrayList<virus> v) {
-    for (int i = 0; i < v.size(); i++) {
-      virus vr = v.get(i);
-
-
-      PVector desired = PVector.sub(posi, vr.posi);
-      desired.setMag(speed);
-
-      PVector steer = PVector.sub(desired, velo);
-      applyForce(steer);
-    }
-  }
-
+//Checks if the lives wander off screen
   void offScreen() {
+    //If the position x is greater than 10 then bring it over to the other side
     if (posi.x > width+10 ) {
       posi.x = -10;
     } 
+    //Opposite of above
     if (posi.x < -10) {
       posi.x = width;
     } 
+    //same for y
     if (posi.y > height+10) {
       posi.y = -10;
     } 
@@ -232,32 +190,34 @@ class RegLife {
       posi.y = height;
     }
   }
-  
+//Checks how many lives that were reproduced have been created
   void addedLives() {
-       textSize(10);
-
-      text("Regular Lives (Created)" + " "+ nf(created, 2), 70, 30);
-     
+    textSize(10);
+    //add the string of text, then NF is used to turn the name into an integer
+    //Specifies how many numbers to return
+    text("Regular Lives (Created)" + " "+ nf(created, 2), 70, 30);
   }
 
   void display() {
-
-    float t = velo.heading();
-    noStroke();
-    fill(127);
-    stroke(2);  
+//checks the rotation of the velocity
+    float t = velo.heading();  
     pushMatrix();
+    //translate the positions
     translate(posi.x, posi.y);
+    //rotate based on the heading
     rotate(t);
-    //rect(posi.x, posi.y, size.x, size.y+50, 30, 30, 30, 30);
-
+    //Since its a sprite we use the sprite library to call methods
+    //setRot rotates the sprite
+    //Set XY sets its position
     avatar.setRot(t);
     avatar.setXY(posi.x, posi.y);
-
     popMatrix();
     pushMatrix();
+    //Translate the life forms legs
     translate(posi.x, posi.y);
-
+    //rotate them so they look like they're moving side to side
+    //rot chooses a random number which is multiplied by cos of theta, which is then multiplied by 10
+    //the higher the number the faster the movement
     float rot = (random(cos(theta))*10);
     float rot2 = (random(cos(theta))*20);
     float rot3 = (random(cos(theta))*20);
@@ -284,9 +244,5 @@ class RegLife {
     line(-20-rot2, -60+rot2, 0, -35);//;EFT
     line(30+rot3, -60+rot3, 15, -35);//RIGHT
     popMatrix();
-
-    // avatar
-    stroke(1);
-    //ellipse(posi.x, posi.y, eliS.x, eliS.y);
   }
 }

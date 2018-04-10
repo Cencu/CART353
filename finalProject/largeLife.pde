@@ -49,6 +49,9 @@ class largeLife {
   void update() {
     health -=.02;
     health = constrain(health, 0, 300);
+    if (health < 50 && health > 49) {
+      lLifeHunger.play();
+    } 
     //Add the acceleration to the velocity
     velo.add(accel);
     //limit the velocity to the speed limit
@@ -147,7 +150,7 @@ class largeLife {
       }
     } 
     if (!foundSmall && !foundVirus) {
-        speed = 1;
+      speed = 1;
       for (int i = 0; i < rLife.size(); i++) {
         RegLife r = rLife.get(0);
         PVector desired = PVector.sub(r.posi, posi);
@@ -219,6 +222,7 @@ class largeLife {
       if (vs.dead()) {
         v.remove(0);
         health += 100;
+        lLifeAlert.play();
       } else {
         eating = false;
       }
@@ -277,6 +281,7 @@ class largeLife {
       } 
       if (s.dead()) {
         sLife.remove(j);
+        sLifedead.play();
       } else {
         eatingS = false;
       }
@@ -336,6 +341,7 @@ class largeLife {
       largeLife lLives = lLife.get(l);
       if (dead()) {
         lLife.remove(l);
+        lLifedeplete.play();
       }
     }
   }

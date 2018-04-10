@@ -140,6 +140,8 @@ class virus {
         health+=.02;
       } 
       if (r.dead()) {
+        rLifedeplete.play();
+
         rLife.remove(0);
       } else {
         eating = false;
@@ -159,6 +161,7 @@ class virus {
       } 
       if (s.dead()) {
         sLife.remove(0);
+        sLifedead.play();
       } else {
         eating = false;
       }
@@ -169,7 +172,7 @@ class virus {
     fill(255, 0, 0, health);
     //float t = velo.heading();
     pushMatrix();
-    translate(posi.x,posi.y);
+    translate(posi.x, posi.y);
     //rotate(t-10);
     triangle(-25, -40, -20, +10, 0, -10);
     triangle(25, -40, 0, -10, 20, 10);

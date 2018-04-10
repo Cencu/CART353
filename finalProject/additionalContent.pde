@@ -17,10 +17,14 @@ class additionalContent {
 
 
   void timer() {
-
+//A timer where we convert seconds to millis
+//minutes to seconds
     seconds = millis()/1000;
     mins = millis()/1000/60;
+    //display time for the seconds, which is subtracted by the restart seconds 
+    //restarts the seconds when they reach 60
     displayTimeS = seconds-restartSec;
+    //Changes the minutes when it reaches 60
     displayTimeM = mins-restartMin;
     if (seconds % 60 == 0) {
       restartSec = seconds; 
@@ -36,7 +40,7 @@ class additionalContent {
 
   void lifeList() {
     textSize(10);
-      text("Regular Lives" + " "+ nf(maxPlaced, 2), 50, 50);
+    text("Regular Lives" + " "+ nf(regPlaced, 2), 50, 50);
     text("Small Lives" + " " + nf(smallPlaced, 2), 45, 70);
     text("Large Lives" + " " + nf(largePlaced, 2), 45, 90);
   }
