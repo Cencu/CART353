@@ -1,5 +1,5 @@
 class smallLife {
-   //PVectors for location, velocity, acceleration and size
+  //PVectors for location, velocity, acceleration and size
   PVector posi;
   PVector velo;
   PVector accel;
@@ -27,8 +27,8 @@ class smallLife {
     moment = 0;
     health = 400;
   }
-  
-   //basic movement
+
+  //basic movement
   void update() {
     println(health);
     health -= .02;
@@ -52,7 +52,7 @@ class smallLife {
     accel.add(force);
   }
 
-   //Create a wandering method, which makes it seem like the object wanders about on the screen
+  //Create a wandering method, which makes it seem like the object wanders about on the screen
   void wander() {
     //Wander radius
     float wanderR = 25;
@@ -92,50 +92,41 @@ class smallLife {
     steer.limit(.05);
     applyForce(steer);
   }
-  
-   void display() {
-    fill(0, 0, 255, health);
-    //rectMode(CENTER);
-    ellipse(posi.x, posi.y, size.x, size.y);
-  }
 
-  void moveLife() {
-    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
-      if (mousePressed) {
-        posi.x = mouseX;
-        posi.y = mouseY;
+  void display() {
+    fill(0, 0, 255, health);
+      smallAvatar.setXY(posi.x, posi.y);
+      smallAvatar.setScale(.5);
+    }
+
+    void moveLife() {
+      if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+        if (mousePressed) {
+          posi.x = mouseX;
+          posi.y = mouseY;
+        }
+      }
+    }
+    boolean dead() {
+      if (health < 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    void offScreen() {
+      if (posi.x > width+10 ) {
+        posi.x = -10;
+      } 
+      if (posi.x < -10) {
+        posi.x = width;
+      } 
+      if (posi.y > height+10) {
+        posi.y = -10;
+      } 
+      if (posi.y < -10) {
+        posi.y = height;
       }
     }
   }
-  boolean dead() {
-    if (health < 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void offScreen() {
-    if (posi.x > width+10 ) {
-      posi.x = -10;
-    } 
-    if (posi.x < -10) {
-      posi.x = width;
-    } 
-    if (posi.y > height+10) {
-      posi.y = -10;
-    } 
-    if (posi.y < -10) {
-      posi.y = height;
-    }
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-}

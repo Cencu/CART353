@@ -237,8 +237,6 @@ class RegLife {
     float t = velo.heading();
     noStroke();
     fill(127);
-    rectMode(CENTER);    
-    imageMode(CENTER);
     stroke(2);  
     pushMatrix();
     translate(posi.x, posi.y);

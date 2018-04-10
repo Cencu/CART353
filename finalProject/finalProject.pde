@@ -26,7 +26,10 @@ ArrayList<virus> v;
 additionalContent aC;
 
 Sprite avatar;
+Sprite smallAvatar;
 StopWatch times = new StopWatch();
+StopWatch times2 = new StopWatch();
+
 float avatarSpeed =1;
 
 float r;
@@ -41,11 +44,12 @@ int largePlaced = 0;
 void setup() {
   size(1000, 1000);
 
-  avatar = new Sprite(this, "reglife.png", 24, 1, 1);
-  avatar.setFrameSequence(0, 1);
+
+
   //create the arraylist's in the setup
   rLife = new ArrayList<RegLife>();
-
+  avatar = new Sprite(this, "reglife.png", 24, 1, 1);
+  avatar.setFrameSequence(0, 1);
   //use a for loop to add the lives into the game
   //Specify their starting location
   for (int i = 0; i < rLife.size(); i++) {
@@ -63,6 +67,9 @@ void setup() {
   for (int i = 0; i < sLife.size(); i++) {
     sLife.add(new smallLife(width/2, height/2));
   }
+  smallAvatar = new Sprite(this, "sLife.png", 22, 1, 1);
+  smallAvatar.setFrameSequence(0, 1);
+
   v = new ArrayList<virus>();
 
   for (int i = 0; i < v.size(); i++) {
@@ -111,6 +118,10 @@ void draw() {
 
   for (int s = 0; s < sLife.size(); s++) {
     smallLife sLives = sLife.get(s);
+    double deltaTime2 = times2.getElapsedTime();
+    S4P.updateSprites(deltaTime2);
+    S4P.drawSprites();
+    smallAvatar.setFrameSequence(22, 5, .08);
     if (sLives.health >= 5) {
       placed = true;
     } 
