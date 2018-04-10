@@ -47,9 +47,8 @@ class largeLife {
 
   //basic movement
   void update() {
-    println(health);
     health -=.02;
-    health = constrain(health, 0, 500);
+    health = constrain(health, 0, 300);
     //Add the acceleration to the velocity
     velo.add(accel);
     //limit the velocity to the speed limit
@@ -287,7 +286,6 @@ class largeLife {
 
   void display() {
     fill(0, health);
-    //rectMode(CENTER);
     ellipse(posi.x-50, posi.y+50, size.x-30, size.y-30);//BOTTOM LEFT
     ellipse(posi.x+50, posi.y-50, size.x-30, size.y-30);//TOP RIGHT
     ellipse(posi.x-50, posi.y-50, size.x-30, size.y-30);//TOP LEFT

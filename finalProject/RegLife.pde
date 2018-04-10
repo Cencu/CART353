@@ -33,12 +33,10 @@ class RegLife {
     placed = false;
     speed = 1;
     health = 200;
-    // bacteria = loadImage("reglife.png");
   }
   //basic movement
   void update() {
-    //println(health);
-    health-=.02;
+    health-=.04;
     if (health >= 5) {
       placed = true;
     } 
@@ -237,7 +235,6 @@ class RegLife {
   void display() {
 
     float t = velo.heading();
-    println(t);
     noStroke();
     fill(127);
     rectMode(CENTER);    

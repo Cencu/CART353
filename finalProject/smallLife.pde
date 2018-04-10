@@ -25,7 +25,7 @@ class smallLife {
     withinAura = false;
     placed = false;
     moment = 0;
-    health = 600;
+    health = 400;
   }
   
    //basic movement

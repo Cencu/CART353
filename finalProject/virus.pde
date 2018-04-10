@@ -23,7 +23,7 @@ class virus {
     size = new PVector(20, 20);
     speed = 8;
     withinAura = false;
-    health = 500;
+    health = 350;
 
     imageCount = count;
     images = new PImage[imageCount];
@@ -168,20 +168,18 @@ class virus {
 
   void display() {
     fill(255, 0, 0, health);
-    float theta = velo.heading() + radians(90);
-
-    //rectMode(CENTER);
-    //pushMatrix();
-    //translate(width/3,height/3);
-    //rotate(theta);
-    triangle(posi.x-25, posi.y-40, posi.x-20, posi.y+10, posi.x, posi.y-10);
-    triangle(posi.x+25, posi.y-40, posi.x, posi.y-10, posi.x+20, posi.y+10);
-    line(posi.x+30, posi.y-50, posi.x+25, posi.y-37);
-    line(posi.x-30, posi.y-50, posi.x-25, posi.y-37);
+    float t = velo.heading();
+    pushMatrix();
+    translate(posi.x,posi.y);
+    rotate(t);
+    triangle(-25, -40, -20, +10, 0, -10);
+    triangle(25, -40, 0, -10, 20, 10);
+    line(30, -50, 25, -37);
+    line(-30, -50, -25, -37);
     frame = (frame+1) % imageCount;
     imageMode(CENTER);
-    image(images[frame], posi.x, posi.y-50, size.x+40, size.y);
-    //popMatrix();
+    image(images[frame], 0, -50, size.x+40, size.y);
+    popMatrix();
   }
 
   void moveLife() {
