@@ -42,8 +42,6 @@ class virus {
 
   //basic movement
   void update() {
-    println(eating);
-
     //Add the acceleration to the velocity
     velo.add(accel);
     //limit the velocity to the speed limit
@@ -93,7 +91,7 @@ class virus {
         applyForce(steer);
       }
     }
-   if (pl.player && smallPlaced <= 0) {
+   if (pl.player && smallPlaced <= 0 && !foundReg) {
       PVector desired = PVector.sub(pl.posi, posi);
       desired.setMag(speed);
 

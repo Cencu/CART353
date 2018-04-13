@@ -1,5 +1,4 @@
 import processing.sound.*;
-
 import sprites.*;
 import sprites.maths.*;
 import sprites.utils.*;
@@ -45,7 +44,6 @@ float r;
 float rV = 7000;
 
 
-boolean placed = false;
 
 //Checks how many lives have been placed
 int maxPlaced = 0;
@@ -73,8 +71,8 @@ void setup() {
 
   startMenu = new StartMenu();
   instructions = new Instructions();
-  gameOver = new GameOver();
   playerGame = new player();
+  gameOver = new GameOver();
 
   state = State.START_MENU;
 
@@ -141,7 +139,10 @@ void setup() {
 
 void draw() {
   background(255);
+
   switch (state) {
+
+
   case NONE:
     break;
 
@@ -163,7 +164,6 @@ void draw() {
   case PLAYER:
     if (instructions.selection == State.NONE) {
       if (!gameOver.gameDone) {
-
         //use for loop to loop through their properties
         for (int r = 0; r < rLife.size(); r ++) {
           RegLife rLives = rLife.get(r);
@@ -226,14 +226,15 @@ void draw() {
           vrus.display();
         }
 
-        aC.timer();
+        aC.timer(instructions);
         aC.lifeList();
 
-        pl.display();
         pl.movement();
         pl.moveLife(rLife, sLife, lLife);
         pl.offScreen();
-        pl.ifDead();
+        pl.ifDead(gameOver);
+        pl.display();
+
         //A way of spawning in the virus at random times
         //If r lands on 1 then a virus spawns in 
         //R chooses a random number between 0 and 5000
@@ -244,6 +245,9 @@ void draw() {
           v.add(new virus("virus", width/3, height/3, 9));
         } else {
           return;
+        }
+        if (gameOver.gameDone) {
+          state = State.GAME_OVER;
         }
       }
     }
@@ -272,10 +276,8 @@ void keyPressed() {
       instructions.goToGame = true;
     }
     break;
-
   case GAME_OVER:
     break;
-
   case PLAYER:
 
     if (maxPlaced <= 15) {
@@ -338,7 +340,9 @@ void keyReleased() {
   case INSTRUCTIONS:
     instructions.keyReleased();
     break;
-
+  case GAME_OVER:
+    gameOver.keyReleased();
+    break;
   case PLAYER:
 
 
@@ -359,7 +363,6 @@ void keyReleased() {
     }
 
     break;
-  case GAME_OVER:
-    break;
+
   }
 }

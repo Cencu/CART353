@@ -15,9 +15,9 @@ class additionalContent {
 
 
 
-  void timer() {
-//A timer where we convert seconds to millis
-//minutes to seconds
+  void timer(Instructions i) {
+    //A timer where we convert seconds to millis
+    //minutes to seconds
     seconds = millis()/1000;
     mins = millis()/1000/60;
     //display time for the seconds, which is subtracted by the restart seconds 
@@ -27,11 +27,15 @@ class additionalContent {
     displayTimeM = mins;
     //when seconds is larger than 60 it will equal to zero, since it cannot be larger than itself
     //When it reaches 0, the counter restarts the seconds 
-    if (seconds % 60 == 0) {
+    if (i.goToGame) {
+          restartSec = seconds; 
+        i.goToGame = false;
+     if (seconds % 60 == 0) {
       //restartsecs = 0 so it reverts back to 0
       restartSec = seconds; 
       //Displays as 0
       displayTimeS = startSec;
+    }
     }
 
     textAlign(CENTER);

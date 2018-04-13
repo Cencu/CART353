@@ -1,7 +1,6 @@
 class StartMenu {
   boolean goToInstructions;
   boolean finished = false;
- // State selection = State.NONE;
 
   StartMenu() {
   }

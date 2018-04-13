@@ -21,8 +21,7 @@ class player {
 
   boolean player;
 
-  player(){
-  
+  player() {
   }
 
   player(float x, float y) {
@@ -41,6 +40,7 @@ class player {
   }
 
   void movement() {
+    println(health);
     velo.add(accel);
     posi.add(velo);
     accel.mult(0);
@@ -105,7 +105,7 @@ class player {
       posi.y = height;
     }
   }
-  
+
   void display() {
     fill(0, 0, health);
     float mov = 20;
@@ -132,13 +132,11 @@ class player {
     line(9, 0, 9, -50+triMove);
     popMatrix();
   }
-  
-  void ifDead() {
-   if (health <= 0) {
-     
-   }
+
+  void ifDead(GameOver gameOver) {
+    if (health <= 2) {
+      gameOver.gameDone = true;
+      println(gameOver.gameDone);
+    }
   }
-  
-  
-  
 }
