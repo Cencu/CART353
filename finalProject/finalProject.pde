@@ -131,7 +131,6 @@ void draw() {
     avatar.setFrameSequence(24, 1, .1);
 
     rLives.dead();
-
     rLives.update();
     rLives.wander();
     rLives.createLife(rLife);

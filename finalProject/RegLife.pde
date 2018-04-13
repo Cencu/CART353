@@ -71,7 +71,7 @@ class RegLife {
     PVector newPosi = velo.get();
     //Set it to one and multiply it by the speed
     newPosi.normalize();
-    newPosi.mult(1);
+    newPosi.mult(80);
     //Add the position
     newPosi.add(posi);
     //change in position while wandering

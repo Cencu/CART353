@@ -98,7 +98,6 @@ class player {
     }
   }
   void display() {
-    float t = velo.heading() + radians(90);  
 
     fill(0, 0, 255);
     float mov = 20;
@@ -114,13 +113,15 @@ class player {
       }
     }
     pushMatrix();
+    float t = velo.heading() + radians(90);  
+
     translate(posi.x, posi.y);
     strokeWeight(0);
     rotate(t);
     triangle(20, 10, 0, 10, 10, -30);
     triangle(20, -30+triMove, 0, -30+triMove, 10, -70+triMove);
     strokeWeight(1);
-    line(9, 0+triMove, 9, -50);
+    line(9, 0, 9, -50+triMove);
     popMatrix();
   }
 }
