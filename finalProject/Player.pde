@@ -21,6 +21,10 @@ class player {
 
   boolean player;
 
+  player(){
+  
+  }
+
   player(float x, float y) {
     mass = 1;
     posi = new PVector(width/2, height/2);

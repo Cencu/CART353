@@ -53,15 +53,37 @@ int regPlaced = 0;
 int smallPlaced = 0;
 int largePlaced = 0;
 
+enum State {
+  NONE, 
+    START_MENU, 
+    INSTRUCTIONS, 
+    PLAYER, 
+    GAME_OVER
+}
+
+State state;
+StartMenu startMenu;
+Instructions instructions;
+player playerGame;
+GameOver gameOver;
+
+
 void setup() {
   size(1000, 1000);
+
+  startMenu = new StartMenu();
+  instructions = new Instructions();
+  gameOver = new GameOver();
+  playerGame = new player();
+
+  state = State.START_MENU;
 
   //create the arraylist's in the setup
   rLife = new ArrayList<RegLife>();
   //Load the avatar
   avatar = new Sprite(this, "reglife.png", 24, 1, 1);
   //set the frame sequence
-  avatar.setFrameSequence(0, 200);
+  avatar.setFrameSequence(0, 1);
   //use a for loop to add the lives into the game
   //Specify their starting location
   for (int i = 0; i < rLife.size(); i++) {
@@ -119,149 +141,225 @@ void setup() {
 
 void draw() {
   background(255);
+  switch (state) {
+  case NONE:
+    break;
 
-  //use for loop to loop through their properties
-  for (int r = 0; r < rLife.size(); r ++) {
-    RegLife rLives = rLife.get(r);
-    //Draw the sprites based on the stopwatch
-    double deltaTime = times.getElapsedTime();
-    //update based on stopwatch time
-    S4P.updateSprites(deltaTime);
-    //draw the sprites
-    S4P.drawSprites();
-    //set the frame sequence based on the number of frames and the speed each frame is shown
-    avatar.setFrameSequence(24, 1, .1);
+  case START_MENU:
+    startMenu.update();
+    if (startMenu.finished) {
+      state = State.INSTRUCTIONS;
+    }
+    break;
 
-    rLives.dead();
-    rLives.update();
-    rLives.wander();
-    rLives.createLife(rLife);
-    rLives.moveLife();
-    rLives.offScreen();
-    rLives.display();
-  }  
-  for (int l = 0; l < lLife.size(); l++ ) {
-    largeLife lLives = lLife.get(l);
-    lLives.update();
-    lLives.wander();
-    lLives.findFood(rLife, sLife, v);
-    lLives.eat(rLife);
-    lLives.eatV(v);
-    lLives.moveLife();
-    lLives.eatSmall(sLife);
-    lLives.offScreen();
-    lLives.died();
-    lLives.display();
-  }
+  case INSTRUCTIONS:
+    instructions.update();
+    if (instructions.selection != State.NONE) {
+      state = instructions.selection;
+      instructions.selection = State.NONE;
+      state = State.PLAYER;
+    }
+    break;
+  case PLAYER:
+    if (instructions.selection == State.NONE) {
+      if (!gameOver.gameDone) {
 
-  for (int s = 0; s < sLife.size(); s++) {
-    smallLife sLives = sLife.get(s);
-    double deltaTime2 = times2.getElapsedTime();
-    S4P.updateSprites(deltaTime2);
-    S4P.drawSprites();
-    smallAvatar.setFrameSequence(22, 1, .08);
-    sLives.dead();
-    sLives.update();
-    sLives.wander();
-    sLives.moveLife();
-    sLives.offScreen();
-    sLives.display();
-  }
+        //use for loop to loop through their properties
+        for (int r = 0; r < rLife.size(); r ++) {
+          RegLife rLives = rLife.get(r);
+          //Draw the sprites based on the stopwatch
+          double deltaTime = times.getElapsedTime();
+          //update based on stopwatch time
+          S4P.updateSprites(deltaTime);
+          //draw the sprites
+          S4P.drawSprites();
+          //set the frame sequence based on the number of frames and the speed each frame is shown
+          avatar.setFrameSequence(24, 1, .1);
 
-  for (int vs = 0; vs < v.size(); vs++) {
-    virus vrus =  v.get(vs);
+          rLives.dead();
+          rLives.update();
+          rLives.wander();
+          rLives.createLife(rLife);
+          rLives.moveLife();
+          rLives.offScreen();
+          rLives.display();
+        }  
+        for (int l = 0; l < lLife.size(); l++ ) {
+          largeLife lLives = lLife.get(l);
+          lLives.update();
+          lLives.wander();
+          lLives.findFood(rLife, sLife, v);
+          lLives.eat(rLife);
+          lLives.eatV(v);
+          lLives.moveLife();
+          lLives.eatSmall(sLife);
+          lLives.offScreen();
+          lLives.died();
+          lLives.display();
+        }
 
-    vrus.dead();
-    vrus.update();
-    vrus.findFood(rLife, sLife, pl);
-    vrus.eat(rLife, sLife);
-    vrus.eatSmall(sLife);
-    vrus.eatPlayer(pl);
-    vrus.offScreen();
-    vrus.moveLife();
-    vrus.display();
-  }
+        for (int s = 0; s < sLife.size(); s++) {
+          smallLife sLives = sLife.get(s);
+          double deltaTime2 = times2.getElapsedTime();
+          S4P.updateSprites(deltaTime2);
+          S4P.drawSprites();
+          smallAvatar.setFrameSequence(22, 1, .08);
+          sLives.dead();
+          sLives.update();
+          sLives.wander();
+          sLives.moveLife();
+          sLives.offScreen();
+          sLives.display();
+        }
 
-  aC.timer();
-  aC.lifeList();
+        for (int vs = 0; vs < v.size(); vs++) {
+          virus vrus =  v.get(vs);
 
-  pl.display();
-  pl.movement();
-  pl.moveLife(rLife, sLife, lLife);
-  pl.offScreen();
-  pl.ifDead();
-  //A way of spawning in the virus at random times
-  //If r lands on 1 then a virus spawns in 
-  //R chooses a random number between 0 and 5000
-  //5000 also decreases so theres more of a likelyhood that one will be chosen
-  r = floor(random(0, rV));
-  rV -=.02;
-  if (r == 200) {
-    v.add(new virus("virus", width/3, height/3, 9));
-  } else {
-    return;
+          vrus.dead();
+          vrus.update();
+          vrus.findFood(rLife, sLife, pl);
+          vrus.eat(rLife, sLife);
+          vrus.eatSmall(sLife);
+          vrus.eatPlayer(pl);
+          vrus.offScreen();
+          vrus.moveLife();
+          vrus.display();
+        }
+
+        aC.timer();
+        aC.lifeList();
+
+        pl.display();
+        pl.movement();
+        pl.moveLife(rLife, sLife, lLife);
+        pl.offScreen();
+        pl.ifDead();
+        //A way of spawning in the virus at random times
+        //If r lands on 1 then a virus spawns in 
+        //R chooses a random number between 0 and 5000
+        //5000 also decreases so theres more of a likelyhood that one will be chosen
+        r = floor(random(0, rV));
+        rV -=.02;
+        if (r == 200) {
+          v.add(new virus("virus", width/3, height/3, 9));
+        } else {
+          return;
+        }
+      }
+    }
+    break;
+  case GAME_OVER:
+    gameOver.update();
+    break;
   }
 }
 
 void keyPressed() {
-  if (maxPlaced <= 15) {
+  switch(state) {
+  case NONE:
+    break;
 
-    if (key == 'r' || key == 'R') {
-      rLife.add(new RegLife(width/2, height/2));
-      maxPlaced +=1;
-      regPlaced +=1;
-      rLifeSpawn.play();
+  case START_MENU:
+    startMenu.keyPressed();
+    if (key == ENTER) {
+      startMenu.goToInstructions = true;
     }
-    if (key == 'l' || key == 'L') {
-      lLife.add(new largeLife("lLife", width/2, height/2, 116));
-      maxPlaced +=1;
-      largePlaced +=1;
-      lLifespawn.play();
+    break; 
+
+  case INSTRUCTIONS:
+    instructions.keyPressed();
+    if (key == 'a' || key == 'A') {
+      instructions.goToGame = true;
     }
-    if (key == 's' || key == 'S') {
-      sLife.add(new smallLife(width/2, height/2));
-      maxPlaced +=1;
-      smallPlaced +=1;
-      sLifeSpawn.play();
+    break;
+
+  case GAME_OVER:
+    break;
+
+  case PLAYER:
+
+    if (maxPlaced <= 15) {
+
+      if (key == 'r' || key == 'R') {
+        rLife.add(new RegLife(width/2, height/2));
+        maxPlaced +=1;
+        regPlaced +=1;
+        rLifeSpawn.play();
+      }
+      if (key == 'l' || key == 'L') {
+        lLife.add(new largeLife("lLife", width/2, height/2, 116));
+        maxPlaced +=1;
+        largePlaced +=1;
+        lLifespawn.play();
+      }
+      if (key == 's' || key == 'S') {
+        sLife.add(new smallLife(width/2, height/2));
+        maxPlaced +=1;
+        smallPlaced +=1;
+        sLifeSpawn.play();
+      }
     }
-  }
 
-  if (keyCode == LEFT) {
-    pl.goLeft = true;
-  }
-  if (keyCode == RIGHT) {
-    pl.goRight = true;
-  }
-  if (keyCode == UP) {
-    pl.goUp = true;
-  }
-  if (keyCode == DOWN) {
-    pl.goDown = true;
-  } 
-  if (keyCode == SHIFT) {
-    pl.shifted = true;
-  }
+    if (keyCode == LEFT) {
+      pl.goLeft = true;
+    }
+    if (keyCode == RIGHT) {
+      pl.goRight = true;
+    }
+    if (keyCode == UP) {
+      pl.goUp = true;
+    }
+    if (keyCode == DOWN) {
+      pl.goDown = true;
+    } 
+    if (keyCode == SHIFT) {
+      pl.shifted = true;
+    }
 
 
-  if (key == 'v' || key == 'V') {
-    v.add(new virus("virus", width/3, height/3, 9));
+    if (key == 'v' || key == 'V') {
+      v.add(new virus("virus", width/3, height/3, 9));
+    }
+    break;
   }
 }
 
 void keyReleased() {
-  if (keyCode == LEFT) {
-    pl.goLeft = false;
-  } 
-  if (keyCode == RIGHT) {
-    pl.goRight = false;
-  } 
-  if (keyCode == UP) {
-    pl.goUp = false;
-  }  
-  if (keyCode == DOWN) {
-    pl.goDown = false;
-  }
-  if (keyCode == SHIFT) {
-    pl.shifted = false;
+  switch (state) {
+
+  case NONE:
+    break;
+
+  case START_MENU:
+    startMenu.keyReleased();
+
+    break;
+
+  case INSTRUCTIONS:
+    instructions.keyReleased();
+    break;
+
+  case PLAYER:
+
+
+    if (keyCode == LEFT) {
+      pl.goLeft = false;
+    } 
+    if (keyCode == RIGHT) {
+      pl.goRight = false;
+    } 
+    if (keyCode == UP) {
+      pl.goUp = false;
+    }  
+    if (keyCode == DOWN) {
+      pl.goDown = false;
+    }
+    if (keyCode == SHIFT) {
+      pl.shifted = false;
+    }
+
+    break;
+  case GAME_OVER:
+    break;
   }
 }
