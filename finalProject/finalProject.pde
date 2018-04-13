@@ -37,6 +37,8 @@ SoundFile sLifedead;
 SoundFile rLifeSpawn;
 SoundFile rLifedeplete;
 
+PFont titleFont;
+PFont instructionFont;
 
 //Random number chosen for virus to appear
 float r;
@@ -67,6 +69,8 @@ GameOver gameOver;
 
 void setup() {
   size(1000, 1000);
+  titleFont = createFont("Radioactive-Regular.ttf",50);
+instructionFont = createFont("HelveticaLTStd-Light.otf",50);
 
   startMenu = new StartMenu();
   instructions = new Instructions();

@@ -25,7 +25,7 @@ class smallLife {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
     velo = new PVector(0, 0);
-    size = new PVector(20, 20);
+    size = new PVector(30, 30);
     speed = .7;
     withinAura = false;
     placed = false;

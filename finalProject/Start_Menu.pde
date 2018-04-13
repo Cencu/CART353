@@ -10,20 +10,21 @@ class StartMenu {
 
   void display() {
     background(0);
-    textAlign(CENTER,CENTER);
-    textSize(32);
-    text("Critter Colony",width/2,height/2);
-    
-     text("Press Enter for instructions", width/2,height/3);
+    textAlign(CENTER, CENTER);
+    textSize(82);
+    text("Critter Colony", width/2, height/3);
+    textSize(52);
+
+    text("Press Enter for instructions", width/2, 600);
+    textFont(titleFont);
   }
-  
+
   void keyPressed() {
-   if (goToInstructions) {
-     finished = true;
-   }
+    if (goToInstructions) {
+      finished = true;
+    }
   }
-  
+
   void keyReleased() {
-    
   }
 }
