@@ -8,6 +8,7 @@ class player {
   //Speed of the life forms
   float speed;
   float mass;
+  float health = 255;
 
   PVector forward = new PVector(0.05, 0);
   PVector backwards = new PVector(-0.05, 0);
@@ -18,6 +19,8 @@ class player {
   boolean moving = false;
   float triMove = 0;
 
+  boolean player;
+
   player(float x, float y) {
     mass = 1;
     posi = new PVector(width/2, height/2);
@@ -25,6 +28,7 @@ class player {
     velo = new PVector(0, 0);
     size = new PVector(30, 30);
     speed = 5;
+    player = true;
   }
 
   void applyForce(PVector force) {
@@ -97,9 +101,9 @@ class player {
       posi.y = height;
     }
   }
+  
   void display() {
-
-    fill(0, 0, 255);
+    fill(0, 0, health);
     float mov = 20;
     if (goLeft||goRight||goUp||goDown) {
       moving = true;

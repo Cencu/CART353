@@ -42,7 +42,7 @@ class virus {
 
   //basic movement
   void update() {
-    println(health);
+    println(eating);
 
     //Add the acceleration to the velocity
     velo.add(accel);
@@ -59,7 +59,7 @@ class virus {
   }
 
 
-  void findFood(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
+  void findFood(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife, player pl) {
     //The virus prioritizes regular lives
     //So the boolean starts out as false
     //we then go through the array of lives
@@ -82,10 +82,18 @@ class virus {
         PVector steer = PVector.sub(desired, velo);
         applyForce(steer);
       }
-    } else { //If there is no regular lives then we search for small lives 
+    } 
+    if (!foundReg) { //If there is no regular lives then we search for small lives 
       for (int j = 0; j < sLife.size(); j++) {
         smallLife s = sLife.get(0);
         PVector desired = PVector.sub(s.posi, posi);
+        desired.setMag(speed);
+
+        PVector steer = PVector.sub(desired, velo);
+        applyForce(steer);
+      } 
+      if (pl.player && !foundReg) {
+        PVector desired = PVector.sub(pl.posi, posi);
         desired.setMag(speed);
 
         PVector steer = PVector.sub(desired, velo);
@@ -113,7 +121,7 @@ class virus {
       } else {
         eating = false;
       }
-    } 
+    }
     return sum;
   }
   PVector detectionSmall(ArrayList<smallLife> sLife) {
@@ -139,9 +147,40 @@ class virus {
     }
     return sum;
   }
-//method used to eat the other lives 
-//goes through both life forms
-//deplete the lives at a very fast rate
+  PVector detectionPlayer(player pl) {
+    //The PVector needs to return another PVector so
+    //We create an empty one and return it at the end
+    PVector sum = new PVector();
+    //Cycle through each object
+    //distance between the object and another object
+    float distbS = PVector.dist(posi, pl.posi);
+    //Minimum distance is sizeX
+    float minDist = pl.size.x;
+    //If the distance between the two objects is greater than 0
+    //and the distance between the two objects is less than sizeX
+    //Then the boolean becomes true
+    if ((distbS < pl.posi.x) && (distbS < minDist)) {
+      eating = true;
+    } 
+    return sum;
+  }
+  
+    //method used to eat the other lives 
+  //goes through both life forms
+  //deplete the lives at a very fast rate
+  void eatPlayer(player pl) {
+    PVector eat = detectionPlayer(pl);
+    
+      if (eating == true) {
+        pl.health--;
+      } 
+  }
+
+  
+  
+  //method used to eat the other lives 
+  //goes through both life forms
+  //deplete the lives at a very fast rate
   void eat(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife) {
     PVector eat = detection(rLife, sLife);
     for (int i = rLife.size()-1; i >= 0; i--) {
