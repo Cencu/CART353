@@ -16,7 +16,12 @@ class smallLife {
   boolean placed = false;
   float moment;
 
-  smallLife(float x, float y) {
+  //Array of images used for the gif 
+  PImage[] images;
+  int imageCount;
+  int frame;
+
+  smallLife(String imagePrefix, float x, float y, int count) {
     posi = new PVector(x, y);
     accel = new PVector(0, 0);
     velo = new PVector(0, 0);
@@ -26,6 +31,19 @@ class smallLife {
     placed = false;
     moment = 0;
     health = 400;
+    //the image count equals the count
+    imageCount = count;
+    //create the array of images
+    images = new PImage[imageCount];
+    //use a for loop to go through all the images
+    for (int i = 0; i < imageCount; i++) {
+      // Use nf() to number format 'i' into four digits
+      //use the string and change it to the prefix, which is the name of the files, add the numbers corresponding to the images also 
+      //They go up by 0000 0001 etc... then add the .png
+      //load the array of images
+      String filename = imagePrefix + nf(i, 4) + ".png";
+      images[i] = loadImage(filename);
+    }
   }
 
   //basic movement
@@ -97,39 +115,47 @@ class smallLife {
   boolean dead() {
     if (health < 1) {
       return true;
-      //smallAvatar.isDead();
     } else {
       return false;
     }
   }
   void display() {
-    fill(0, 0, 255, health);
-    smallAvatar.setXY(posi.x, posi.y);
-    smallAvatar.setScale(.5);
+    fill(0);
+    imageMode(CENTER);
+    //the frames equal the frames +1, which is divided by the image count
+    frame = (frame+1) % imageCount;
+    //display the gif 
+    image(images[frame], posi.x, posi.y, size.x, size.y); //CENTER 
   }
 
-  void moveLife() {
-    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
-      if (mousePressed) {
-        posi.x = mouseX;
-        posi.y = mouseY;
+    void moveLife() {
+      if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+        if (mousePressed) {
+          posi.x = mouseX;
+          posi.y = mouseY;
+        }
       }
     }
-  }
 
 
-  void offScreen() {
-    if (posi.x > width+10 ) {
-      posi.x = -10;
-    } 
-    if (posi.x < -10) {
-      posi.x = width;
-    } 
-    if (posi.y > height+10) {
-      posi.y = -10;
-    } 
-    if (posi.y < -10) {
-      posi.y = height;
+    void offScreen() {
+      if (posi.x > width+10 ) {
+        posi.x = -10;
+      } 
+      if (posi.x < -10) {
+        posi.x = width;
+      } 
+      if (posi.y > height+10) {
+        posi.y = -10;
+      } 
+      if (posi.y < -10) {
+        posi.y = height;
+      }
     }
+      //return the images
+  int getWidth() {
+    return images[0].width;
   }
-}
+
+    
+  }

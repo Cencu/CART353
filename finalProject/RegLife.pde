@@ -147,7 +147,7 @@ class RegLife {
       lLifespawn.play();
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
-      sLife.add(new smallLife(random(width), random(height)));
+      sLife.add(new smallLife("sLife",random(width), random(height),20));
       smallPlaced += 1;
     }
   }
@@ -167,9 +167,8 @@ class RegLife {
   boolean dead() {
     if (health < 1) {
       regPlaced-=1;
-      avatar.isDead();
       rLifedeplete.play();
-
+      
       return true;
     } else {
       return false;
@@ -200,6 +199,8 @@ class RegLife {
     //Specifies how many numbers to return
     text("Regular Lives (Created)" + " "+ nf(created, 2), 70, 30);
   }
+
+
 
   void display() {
     //checks the rotation of the velocity

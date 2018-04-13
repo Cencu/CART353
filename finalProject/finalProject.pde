@@ -21,10 +21,9 @@ player pl;
 
 //Sprites class for small and regular lives
 Sprite avatar;
-Sprite smallAvatar;
 //Stopwatch to time the sequence of frames
 StopWatch times = new StopWatch();
-StopWatch times2 = new StopWatch();
+//StopWatch times2 = new StopWatch();
 
 //Sound Files
 SoundFile lLifeHunger;//All three use
@@ -97,10 +96,8 @@ void setup() {
   sLife = new ArrayList<smallLife>();
 
   for (int i = 0; i < sLife.size(); i++) {
-    sLife.add(new smallLife(width/2, height/2));
+    sLife.add(new smallLife("sLife",width/2, height/2,20));
   }
-  smallAvatar = new Sprite(this, "sLife.png", 22, 1, 1);
-  smallAvatar.setFrameSequence(0, 1);
 
   v = new ArrayList<virus>();
 
@@ -200,10 +197,6 @@ void draw() {
 
         for (int s = 0; s < sLife.size(); s++) {
           smallLife sLives = sLife.get(s);
-          double deltaTime2 = times2.getElapsedTime();
-          S4P.updateSprites(deltaTime2);
-          S4P.drawSprites();
-          smallAvatar.setFrameSequence(22, 1, .08);
           sLives.dead();
           sLives.update();
           sLives.wander();
@@ -295,7 +288,7 @@ void keyPressed() {
         lLifespawn.play();
       }
       if (key == 's' || key == 'S') {
-        sLife.add(new smallLife(width/2, height/2));
+        sLife.add(new smallLife("sLife",width/2, height/2,20));
         maxPlaced +=1;
         smallPlaced +=1;
         sLifeSpawn.play();
