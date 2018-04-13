@@ -28,19 +28,21 @@ StopWatch times = new StopWatch();
 StopWatch times2 = new StopWatch();
 
 //Sound Files
-SoundFile lLifeHunger;
-SoundFile rLifedeplete;
-SoundFile sLifeSpawn;
+SoundFile lLifeHunger;//All three use
 SoundFile lLifeAlert;
 SoundFile lLifedeplete;
+
 SoundFile lLifespawn;
+SoundFile sLifeSpawn;
 SoundFile sLifedead;
+
 SoundFile rLifeSpawn;
+SoundFile rLifedeplete;
 
 
 //Random number chosen for virus to appear
 float r;
-float rV = 5000;
+float rV = 7000;
 
 
 boolean placed = false;
@@ -65,7 +67,7 @@ void setup() {
   for (int i = 0; i < rLife.size(); i++) {
     rLife.add(new RegLife(width/2, height/2));
   }
-//Call the arrayList again
+  //Call the arrayList again
   lLife = new ArrayList<largeLife>();
 
   for (int i = 0; i < lLife.size(); i++) {
@@ -85,15 +87,15 @@ void setup() {
   for (int i = 0; i < v.size(); i++) {
     v.add (new virus("virus", width/3, height/3, 9));
   }
-  
+
   aC = new additionalContent();
-  pl = new player(width/2,height/2);
-//Load in all the sound files
-//Changed the amplitude because they were too loud
+  pl = new player(width/2, height/2);
+  //Load in all the sound files
+  //Changed the amplitude because they were too loud
   rLifedeplete = new SoundFile(this, "rLifedeplete.wav");
   rLifedeplete.amp(.03);//used
 
-  rLifeSpawn = new SoundFile(this,"rLifespawn.wav");
+  rLifeSpawn = new SoundFile(this, "rLifespawn.wav");
   rLifeSpawn.amp(.1);
 
   lLifeHunger = new SoundFile(this, "lLifeHnger.wav");
@@ -102,13 +104,13 @@ void setup() {
 
   lLifeAlert= new SoundFile (this, "lLifeAlter.wav");
   lLifeAlert.amp(.1);//used
-  
+
   lLifedeplete = new SoundFile (this, "lLifedeplete.wav");
   lLifedeplete.amp(.1);//used
-  
+
   lLifespawn = new SoundFile (this, "lLifespawn.wav");
   lLifespawn.amp(.1);//used
-  
+
   sLifedead = new SoundFile (this, "sLifedead.wav");
   sLifedead.amp(.1);//used
   sLifeSpawn = new SoundFile(this, "sLifespawn.wav");
@@ -171,7 +173,7 @@ void draw() {
 
     vrus.dead();
     vrus.update();
-    vrus.findFood(rLife, sLife,pl);
+    vrus.findFood(rLife, sLife, pl);
     vrus.eat(rLife, sLife);
     vrus.eatSmall(sLife);
     vrus.eatPlayer(pl);
@@ -182,18 +184,19 @@ void draw() {
 
   aC.timer();
   aC.lifeList();
-  
+
   pl.display();
   pl.movement();
   pl.moveLife(rLife, sLife, lLife);
   pl.offScreen();
-//A way of spawning in the virus at random times
-//If r lands on 1 then a virus spawns in 
-//R chooses a random number between 0 and 5000
-//5000 also decreases so theres more of a likelyhood that one will be chosen
+  pl.ifDead();
+  //A way of spawning in the virus at random times
+  //If r lands on 1 then a virus spawns in 
+  //R chooses a random number between 0 and 5000
+  //5000 also decreases so theres more of a likelyhood that one will be chosen
   r = floor(random(0, rV));
   rV -=.02;
-  if (r == 1) {
+  if (r == 200) {
     v.add(new virus("virus", width/3, height/3, 9));
   } else {
     return;
@@ -222,7 +225,7 @@ void keyPressed() {
       sLifeSpawn.play();
     }
   }
-  
+
   if (keyCode == LEFT) {
     pl.goLeft = true;
   }
@@ -233,12 +236,13 @@ void keyPressed() {
     pl.goUp = true;
   }
   if (keyCode == DOWN) {
-   pl.goDown = true; 
-  } if (keyCode == SHIFT) {
-   pl.shifted = true; 
+    pl.goDown = true;
+  } 
+  if (keyCode == SHIFT) {
+    pl.shifted = true;
   }
 
-  
+
   if (key == 'v' || key == 'V') {
     v.add(new virus("virus", width/3, height/3, 9));
   }
@@ -246,16 +250,18 @@ void keyPressed() {
 
 void keyReleased() {
   if (keyCode == LEFT) {
-   pl.goLeft = false; 
-  } if (keyCode == RIGHT) {
+    pl.goLeft = false;
+  } 
+  if (keyCode == RIGHT) {
     pl.goRight = false;
-  } if (keyCode == UP) {
-   pl.goUp = false; 
-  }  if (keyCode == DOWN) {
-   pl.goDown = false; 
-  }if (keyCode == SHIFT) {
-   pl.shifted = false; 
+  } 
+  if (keyCode == UP) {
+    pl.goUp = false;
+  }  
+  if (keyCode == DOWN) {
+    pl.goDown = false;
   }
-  
-  
+  if (keyCode == SHIFT) {
+    pl.shifted = false;
+  }
 }

@@ -128,4 +128,13 @@ class player {
     line(9, 0, 9, -50+triMove);
     popMatrix();
   }
+  
+  void ifDead() {
+   if (health <= 0) {
+     
+   }
+  }
+  
+  
+  
 }

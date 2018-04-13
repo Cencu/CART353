@@ -83,22 +83,22 @@ class virus {
         applyForce(steer);
       }
     } 
-    if (!foundReg) { //If there is no regular lives then we search for small lives 
+    if (!foundReg  && smallPlaced >= 1) { //If there is no regular lives then we search for small lives 
       for (int j = 0; j < sLife.size(); j++) {
         smallLife s = sLife.get(0);
         PVector desired = PVector.sub(s.posi, posi);
-        desired.setMag(speed);
-
-        PVector steer = PVector.sub(desired, velo);
-        applyForce(steer);
-      } 
-      if (pl.player && !foundReg) {
-        PVector desired = PVector.sub(pl.posi, posi);
-        desired.setMag(speed);
+        desired.setMag(speed); 
 
         PVector steer = PVector.sub(desired, velo);
         applyForce(steer);
       }
+    }
+   if (pl.player && smallPlaced <= 0) {
+      PVector desired = PVector.sub(pl.posi, posi);
+      desired.setMag(speed);
+
+      PVector steer = PVector.sub(desired, velo);
+      applyForce(steer);
     }
   }
 
@@ -164,20 +164,20 @@ class virus {
     } 
     return sum;
   }
-  
-    //method used to eat the other lives 
+
+  //method used to eat the other lives 
   //goes through both life forms
   //deplete the lives at a very fast rate
   void eatPlayer(player pl) {
     PVector eat = detectionPlayer(pl);
-    
-      if (eating == true) {
-        pl.health--;
-      } 
+
+    if (eating == true) {
+      pl.health--;
+    }
   }
 
-  
-  
+
+
   //method used to eat the other lives 
   //goes through both life forms
   //deplete the lives at a very fast rate
@@ -213,6 +213,7 @@ class virus {
       if (s.dead()) {
         sLife.remove(0);
         sLifedead.play();
+        smallPlaced -= 1;
       } else {
         eating = false;
       }

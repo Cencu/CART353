@@ -14,7 +14,7 @@ class RegLife {
 
   float health;
   //Call the array again to call objects in the class
-  
+
   ArrayList<RegLife> rLife;
   float mutation = 1;
   float theta = 0.0;
@@ -139,7 +139,7 @@ class RegLife {
       created +=1;
       rLifeSpawn.play();
     } 
-    
+
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
       lLife.add(new largeLife("lLife", random(width), random(height), 116));
       withinAura = false;
@@ -151,7 +151,7 @@ class RegLife {
       smallPlaced += 1;
     }
   }
-//Use mouse to move the lives
+  //Use mouse to move the lives
   void moveLife() {
     if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
       if (mousePressed) {
@@ -162,17 +162,20 @@ class RegLife {
   }
 
 
-//If the life has no more health than the boolean returns false and the life
-//Gets removed
+  //If the life has no more health than the boolean returns false and the life
+  //Gets removed
   boolean dead() {
     if (health < 1) {
       regPlaced-=1;
+      avatar.isDead();
+      rLifedeplete.play();
+
       return true;
     } else {
       return false;
     }
   }
-//Checks if the lives wander off screen
+  //Checks if the lives wander off screen
   void offScreen() {
     //If the position x is greater than 10 then bring it over to the other side
     if (posi.x > width+10 ) {
@@ -190,7 +193,7 @@ class RegLife {
       posi.y = height;
     }
   }
-//Checks how many lives that were reproduced have been created
+  //Checks how many lives that were reproduced have been created
   void addedLives() {
     textSize(10);
     //add the string of text, then NF is used to turn the name into an integer
@@ -199,7 +202,7 @@ class RegLife {
   }
 
   void display() {
-//checks the rotation of the velocity
+    //checks the rotation of the velocity
     float t = velo.heading();  
     pushMatrix();
     //translate the positions
