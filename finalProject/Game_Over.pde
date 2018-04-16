@@ -7,18 +7,17 @@ class GameOver {
   }
 
   void update() {
-    display();
+    display(aC);
   }
 
-  void display() {
+  void display(additionalContent aC) {
     background(0);
-
     textAlign(CENTER, CENTER);
     textSize(80);
     fill(255);
-    ellipse(50,50,50,50);
-    text("Game", width/2, height/3);
-    text("OVER", width/2, height/2.2);
+    text("Game Over", width/2-10, height/3);
+    text("Score:", width/2-125, height/2);
+    text(nf(aC.displayTimeM, 2) + ":" + nf(aC.displayTimeS, 2), width/2+100, height/2);
   }
   void keyReleased() {
   }

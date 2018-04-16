@@ -63,19 +63,21 @@ enum State {
 State state;
 StartMenu startMenu;
 Instructions instructions;
-player playerGame;
 GameOver gameOver;
+
+player playerGame;
 
 
 void setup() {
   size(1000, 1000);
-  titleFont = createFont("Radioactive-Regular.ttf",50);
-instructionFont = createFont("HelveticaLTStd-Light.otf",50);
+  titleFont = createFont("Radioactive-Regular.ttf", 50);
+  instructionFont = createFont("HelveticaLTStd-Light.otf", 50);
 
   startMenu = new StartMenu();
   instructions = new Instructions();
-  playerGame = new player();
   gameOver = new GameOver();
+
+  playerGame = new player();
 
   state = State.START_MENU;
 
@@ -100,7 +102,7 @@ instructionFont = createFont("HelveticaLTStd-Light.otf",50);
   sLife = new ArrayList<smallLife>();
 
   for (int i = 0; i < sLife.size(); i++) {
-    sLife.add(new smallLife("sLife",width/2, height/2,20));
+    sLife.add(new smallLife("sLife", width/2, height/2, 20));
   }
 
   v = new ArrayList<virus>();
@@ -139,7 +141,6 @@ instructionFont = createFont("HelveticaLTStd-Light.otf",50);
 }
 
 void draw() {
-  background(255);
 
   switch (state) {
 
@@ -165,6 +166,8 @@ void draw() {
   case PLAYER:
     if (instructions.selection == State.NONE) {
       if (!gameOver.gameDone) {
+        background(255);
+
         //use for loop to loop through their properties
         for (int r = 0; r < rLife.size(); r ++) {
           RegLife rLives = rLife.get(r);
@@ -223,26 +226,25 @@ void draw() {
           vrus.display();
         }
 
+        //A way of spawning in the virus at random times
+        //If r lands on 1 then a virus spawns in 
+        //R chooses a random number between 0 and 5000
+        //5000 also decreases so theres more of a likelyhood that one will be chosen
+        r = floor(random(199, rV));
+        rV -=.02;
+        if (r == 200) {
+          v.add(new virus("virus", width/3, height/3, 9));
+        } 
+
         aC.timer(instructions);
         aC.lifeList();
 
         pl.movement();
         pl.moveLife(rLife, sLife, lLife);
         pl.offScreen();
-        pl.ifDead(gameOver);
         pl.display();
+        pl.ifDead(gameOver);
 
-        //A way of spawning in the virus at random times
-        //If r lands on 1 then a virus spawns in 
-        //R chooses a random number between 0 and 5000
-        //5000 also decreases so theres more of a likelyhood that one will be chosen
-        r = floor(random(0, rV));
-        rV -=.02;
-        if (r == 200) {
-          v.add(new virus("virus", width/3, height/3, 9));
-        } else {
-          return;
-        }
         if (gameOver.gameDone) {
           state = State.GAME_OVER;
         }
@@ -292,7 +294,7 @@ void keyPressed() {
         lLifespawn.play();
       }
       if (key == 's' || key == 'S') {
-        sLife.add(new smallLife("sLife",width/2, height/2,20));
+        sLife.add(new smallLife("sLife", width/2, height/2, 20));
         maxPlaced +=1;
         smallPlaced +=1;
         sLifeSpawn.play();
@@ -360,6 +362,5 @@ void keyReleased() {
     }
 
     break;
-
   }
 }

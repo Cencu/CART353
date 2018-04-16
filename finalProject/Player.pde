@@ -34,6 +34,14 @@ class player {
     player = true;
   }
 
+
+  void ifDead(GameOver gameOver) {
+    if (health <= 1) {
+      gameOver.gameDone = true;
+      println(gameOver.gameDone);
+    }
+  }
+
   void applyForce(PVector force) {
     PVector f = PVector.div(force, mass);
     accel.add(f);
@@ -131,12 +139,5 @@ class player {
     strokeWeight(1);
     line(9, 0, 9, -50+triMove);
     popMatrix();
-  }
-
-  void ifDead(GameOver gameOver) {
-    if (health <= 2) {
-      gameOver.gameDone = true;
-      println(gameOver.gameDone);
-    }
   }
 }
