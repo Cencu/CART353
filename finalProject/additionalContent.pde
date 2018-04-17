@@ -45,5 +45,4 @@ class additionalContent {
     //Display the timer of minutes and seconds
     text(nf(displayTimeM, 2) + ":" + nf(displayTimeS, 2), 1100, 850);
   }
-
 }

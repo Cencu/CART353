@@ -91,7 +91,7 @@ class virus {
         applyForce(steer);
       }
     }
-   if (pl.player && smallPlaced <= 0 && !foundReg) {
+    if (pl.player && smallPlaced <= 0 && !foundReg) {
       PVector desired = PVector.sub(pl.posi, posi);
       desired.setMag(speed);
 

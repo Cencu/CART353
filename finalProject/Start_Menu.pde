@@ -9,7 +9,7 @@ class StartMenu {
   }
 
   void display() {
-    
+
     background(startPic);
     textAlign(CENTER, CENTER);
     textSize(82);

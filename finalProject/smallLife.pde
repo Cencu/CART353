@@ -125,37 +125,35 @@ class smallLife {
     //the frames equal the frames +1, which is divided by the image count
     frame = (frame+1) % imageCount;
     //display the gif 
-    image(images[frame], posi.x, posi.y, size.x, size.y); //CENTER 
+    image(images[frame], posi.x, posi.y, size.x, size.y); //CENTER
   }
 
-    void moveLife() {
-      if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
-        if (mousePressed) {
-          posi.x = mouseX;
-          posi.y = mouseY;
-        }
+  void moveLife() {
+    if (dist(posi.x, posi.y, mouseX, mouseY) < size.x/2) {
+      if (mousePressed) {
+        posi.x = mouseX;
+        posi.y = mouseY;
       }
     }
+  }
 
 
-    void offScreen() {
-      if (posi.x > width+10 ) {
-        posi.x = -10;
-      } 
-      if (posi.x < -10) {
-        posi.x = width;
-      } 
-      if (posi.y > height+10) {
-        posi.y = -10;
-      } 
-      if (posi.y < -10) {
-        posi.y = height;
-      }
+  void offScreen() {
+    if (posi.x > width+10 ) {
+      posi.x = -10;
+    } 
+    if (posi.x < -10) {
+      posi.x = width;
+    } 
+    if (posi.y > height+10) {
+      posi.y = -10;
+    } 
+    if (posi.y < -10) {
+      posi.y = height;
     }
-      //return the images
+  }
+  //return the images
   int getWidth() {
     return images[0].width;
   }
-
-    
-  }
+}

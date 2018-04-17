@@ -48,9 +48,12 @@ SoundFile random2;
 SoundFile random3;
 SoundFile random4;
 
-SoundFile music0;
-SoundFile music1;
-SoundFile music2;
+Minim minim;
+//AudioPlayer[] music = new AudioPlayer[3];
+int count =0;
+AudioPlayer music0;
+AudioPlayer music1;
+AudioPlayer music2;
 
 //Images\\
 PImage startPic;
@@ -83,6 +86,8 @@ enum State {
 
 void setup() {
   size(1200, 900);
+  minim = new Minim(this); 
+
   //Background Images
   startPic = loadImage("backgroundstart.jpg");
   startPic.resize(1200, 900);
@@ -142,7 +147,7 @@ void setup() {
   rLifedeplete.amp(.03);
 
   rLifeSpawn = new SoundFile(this, "rLifespawn.wav");
-  rLifeSpawn.amp(.1);
+  rLifeSpawn.amp(.03);
 
   lLifeHunger = new SoundFile(this, "lLifeHnger.wav");
   lLifeHunger.amp(.001);
@@ -170,12 +175,27 @@ void setup() {
   random3 = new SoundFile(this, "random2.wav");
   random4 = new SoundFile(this, "random3.mp3");
 
-  music0 = new SoundFile(this, "music0.mp3");
-  music1 = new SoundFile(this, "music1.mp3");
-  music2 = new SoundFile(this, "music2.mp3");
+  music0 = minim.loadFile("music0.mp3");
+  music1 = minim.loadFile("music1.mp3");
+  music2 = minim.loadFile("music2.mp3");
+  /*  music[0] = minim.loadFile("random0.mp3");
+   music[1] = minim.loadFile("music1.mp3");
+   music[2] = minim.loadFile("music2.mp3");*/
 }
 
 void draw() {
+  //method for looping through music 
+  music0.play();
+  if (music0.position() >= music0.length()-5) {
+    music1.play();
+  } 
+  if (music1.position() >= music1.length()-5) {
+    music2.play();
+  }
+  if (music2.position() >= music1.length()-5) {
+    music0.play();
+  }
+
   //Switch between the game screens of the game using a switch statment and state as the name which call the screen 
   switch (state) {
     //If we are in no state then we break out of the loop and switch to the start menu state 
@@ -207,6 +227,7 @@ void draw() {
       if (!gameOver.gameDone) {
         //use the background as an image
         background(gamePic);
+
         //use for loop to loop through their properties
         for (int r = 0; r < rLife.size(); r ++) {
           RegLife rLives = rLife.get(r);
@@ -289,6 +310,7 @@ void draw() {
         }
       }
     }
+
     break;
   case GAME_OVER:
     gameOver.update();
