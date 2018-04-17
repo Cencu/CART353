@@ -180,7 +180,7 @@ class largeLife {
     }
   }
 
-//a method for detecting if we can start eating lives
+  //a method for detecting if we can start eating lives
   PVector detection(ArrayList<RegLife> rLife) {
     //The PVector needs to return another PVector so
     //We create an empty one and return it at the end
@@ -246,6 +246,7 @@ class largeLife {
         v.remove(0);
         health += 100;
         lLifeAlert.play();
+        virusSpawn.stop();
       } else {
         eating = false;
       }

@@ -19,6 +19,7 @@ class player {
   boolean moving = false;
   float triMove = 0;
 
+
   boolean player;
 
   player() {
@@ -38,7 +39,6 @@ class player {
   void ifDead(GameOver gameOver) {
     if (health <= 1) {
       gameOver.gameDone = true;
-      println(gameOver.gameDone);
     }
   }
 
@@ -48,7 +48,6 @@ class player {
   }
 
   void movement() {
-    println(health);
     velo.add(accel);
     posi.add(velo);
     accel.mult(0);
@@ -67,6 +66,7 @@ class player {
     }
   }
   void moveLife(ArrayList<RegLife> rLife, ArrayList<smallLife> sLife, ArrayList<largeLife> lLife) {
+
     for (int i = 0; i < rLife.size(); i++) {
       RegLife r = rLife.get(i);
       if (dist(posi.x, posi.y, r.posi.x, r.posi.y) < size.x/2) {
@@ -114,30 +114,46 @@ class player {
     }
   }
 
-  void display() {
-    fill(0, 0, health);
-    float mov = 20;
-    if (goLeft||goRight||goUp||goDown) {
-      moving = true;
-    } 
-    if (moving) {
-      if (triMove <= mov ) {
-        triMove +=2;
-      }
-      if (triMove == mov) {
-        triMove = -40;
-      }
+  void randomSounds() {
+    float rSoundBetween = floor(random(0, 1000));
+      if (rSoundBetween == 18) {
+        random1.play();
     }
-    pushMatrix();
-    float t = velo.heading() + radians(90);  
+    if ( rSoundBetween == 36) {
+     random2.play(); 
+    } 
+    if (rSoundBetween == 100) {
+     random3.play(); 
+    } 
+    if (rSoundBetween == 150) {
+     random4.play(); 
+    }
+    }
 
-    translate(posi.x, posi.y);
-    strokeWeight(0);
-    rotate(t);
-    triangle(20, 10, 0, 10, 10, -30);
-    triangle(20, -30+triMove, 0, -30+triMove, 10, -70+triMove);
-    strokeWeight(1);
-    line(9, 0, 9, -50+triMove);
-    popMatrix();
+    void display() {
+      fill(0, 0, health);
+      float mov = 20;
+      if (goLeft||goRight||goUp||goDown) {
+        moving = true;
+      } 
+      if (moving) {
+        if (triMove <= mov ) {
+          triMove +=2;
+        }
+        if (triMove == mov) {
+          triMove = -40;
+        }
+      }
+      pushMatrix();
+      float t = velo.heading() + radians(90);  
+
+      translate(posi.x, posi.y);
+      strokeWeight(2);
+      rotate(t);
+      triangle(20, 10, 0, 10, 10, -30);
+      triangle(20, -30+triMove, 0, -30+triMove, 10, -70+triMove);
+      strokeWeight(1);
+      line(10, 0, 10, -50+triMove);
+      popMatrix();
+    }
   }
-}

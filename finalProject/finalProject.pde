@@ -1,3 +1,10 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 import processing.sound.*;
 import sprites.*;
 import sprites.maths.*;
@@ -29,13 +36,21 @@ StopWatch times = new StopWatch();
 SoundFile lLifeHunger;//All three use
 SoundFile lLifeAlert;
 SoundFile lLifedeplete;
-
 SoundFile lLifespawn;
+
 SoundFile sLifeSpawn;
 SoundFile sLifedead;
 
 SoundFile rLifeSpawn;
 SoundFile rLifedeplete;
+
+SoundFile virusSpawn;
+
+SoundFile random1;
+SoundFile random2;
+SoundFile random3;
+SoundFile random4;
+
 
 PFont titleFont;
 PFont instructionFont;
@@ -127,7 +142,6 @@ void setup() {
 
   lLifeAlert= new SoundFile (this, "lLifeAlter.wav");
   lLifeAlert.amp(.1);//used
-
   lLifedeplete = new SoundFile (this, "lLifedeplete.wav");
   lLifedeplete.amp(.1);//used
 
@@ -138,6 +152,15 @@ void setup() {
   sLifedead.amp(.1);//used
   sLifeSpawn = new SoundFile(this, "sLifespawn.wav");
   sLifeSpawn.amp(.01);//used
+
+
+  virusSpawn = new SoundFile(this, "virusalarm.mp3");
+  virusSpawn.amp(.3);//used 
+
+  random1 = new SoundFile(this, "random0.mp3");
+  random2 = new SoundFile(this, "random1.mp3");
+  random3 = new SoundFile(this, "random2.wav");
+  random4 = new SoundFile(this, "random3.mp3");
 }
 
 void draw() {
@@ -234,11 +257,13 @@ void draw() {
         rV -=.02;
         if (r == 200) {
           v.add(new virus("virus", width/3, height/3, 9));
+          virusSpawn.play();
         } 
 
         aC.timer(instructions);
         aC.lifeList();
 
+        pl.randomSounds();
         pl.movement();
         pl.moveLife(rLife, sLife, lLife);
         pl.offScreen();
@@ -320,6 +345,7 @@ void keyPressed() {
 
     if (key == 'v' || key == 'V') {
       v.add(new virus("virus", width/3, height/3, 9));
+      virusSpawn.play();
     }
     break;
   }

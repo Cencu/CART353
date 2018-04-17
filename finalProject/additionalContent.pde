@@ -29,6 +29,7 @@ class additionalContent {
     //When it reaches 0, the counter restarts the seconds 
     if (i.goToGame) {
           restartSec = seconds; 
+    }
         i.goToGame = false;
      if (seconds % 60 == 0) {
       //restartsecs = 0 so it reverts back to 0
@@ -36,7 +37,7 @@ class additionalContent {
       //Displays as 0
       displayTimeS = startSec;
     }
-    }
+    
 
     textAlign(CENTER);
     fill(0);
