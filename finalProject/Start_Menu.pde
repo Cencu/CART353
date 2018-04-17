@@ -9,7 +9,8 @@ class StartMenu {
   }
 
   void display() {
-    background(0);
+    
+    background(startPic);
     textAlign(CENTER, CENTER);
     textSize(82);
     text("Critter Colony", width/2, height/3);

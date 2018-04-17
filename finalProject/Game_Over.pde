@@ -9,7 +9,7 @@ class GameOver {
   void update() {
     display(aC);
   }
-
+//Display the score which is the time you survived 
   void display(additionalContent aC) {
     background(0);
     textAlign(CENTER, CENTER);

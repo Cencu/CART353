@@ -14,8 +14,8 @@ class RegLife {
 
   float health;
   //Call the array again to call objects in the class
-
   ArrayList<RegLife> rLife;
+  //Spawn in a different life form
   float mutation = 1;
   float theta = 0.0;
   int created =0;
@@ -43,7 +43,7 @@ class RegLife {
     if (health >= 5) {
       placed = true;
     } 
-    //If the life form has really low health then it will be delted 
+    //If the life form has really low health then it will be deleted 
     if (health > 1 && health < 4) {
       placed = false;
     }
@@ -147,7 +147,7 @@ class RegLife {
       lLifespawn.play();
     } 
     if ( withinAura == true && mousePressed == false && random(mutation) <=.1) {
-      sLife.add(new smallLife("sLife",random(width), random(height),20));
+      sLife.add(new smallLife("sLife", random(width), random(height), 20));
       smallPlaced += 1;
     }
   }
@@ -168,7 +168,7 @@ class RegLife {
     if (health < 1) {
       regPlaced-=1;
       rLifedeplete.play();
-      
+
       return true;
     } else {
       return false;
@@ -197,7 +197,6 @@ class RegLife {
     textSize(10);
     //add the string of text, then NF is used to turn the name into an integer
     //Specifies how many numbers to return
-    text("Regular Lives (Created)" + " "+ nf(created, 2), 70, 30);
   }
 
 
@@ -228,8 +227,12 @@ class RegLife {
 
     theta += 50;
     rotate(t);
+    noStroke();
+    fill(255, 204, 0, 95);
+    ellipse(0, 0, 20, 20);
+    fill(0);
+    stroke(1);
     line(30, -20+rot, 20, -20);//TOP RIGHT 1
-    //line(40, -30+rot, 20, -30);//TOP RIGHT 2
     line(30, -10+rot, 20, -10);//TOP RIGHT 3
     line(30, 0+rot, 15, 0);//MIDDLE
     line(30, 10+rot, 10, 10);//MIDDLE 2

@@ -10,30 +10,27 @@ import sprites.*;
 import sprites.maths.*;
 import sprites.utils.*;
 
-//R spawns regular lives
-//S small
-//V viruses
-//L large lives
-
-
-
-//Create the arraylist classes for each life form
+/////ArrayLists and Classes\\\\\
 ArrayList<RegLife> rLife;
 ArrayList<largeLife> lLife;
 ArrayList<smallLife> sLife;
 ArrayList<virus> v;
-//Extras put in the game
 additionalContent aC;
 player pl;
-
-//Sprites class for small and regular lives
+State state;
+StartMenu startMenu;
+Instructions instructions;
+GameOver gameOver;
+player playerGame;
+//Sprites class for regular lives
 Sprite avatar;
+
 //Stopwatch to time the sequence of frames
 StopWatch times = new StopWatch();
 //StopWatch times2 = new StopWatch();
 
-//Sound Files
-SoundFile lLifeHunger;//All three use
+//Sound Files\\
+SoundFile lLifeHunger;
 SoundFile lLifeAlert;
 SoundFile lLifedeplete;
 SoundFile lLifespawn;
@@ -51,11 +48,19 @@ SoundFile random2;
 SoundFile random3;
 SoundFile random4;
 
+SoundFile music0;
+SoundFile music1;
+SoundFile music2;
 
+//Images\\
+PImage startPic;
+PImage gamePic;
+
+//Font\\
 PFont titleFont;
 PFont instructionFont;
 
-//Random number chosen for virus to appear
+//Spawn Virus\\
 float r;
 float rV = 7000;
 
@@ -67,6 +72,7 @@ int regPlaced = 0;
 int smallPlaced = 0;
 int largePlaced = 0;
 
+//Title screens of the game
 enum State {
   NONE, 
     START_MENU, 
@@ -75,25 +81,24 @@ enum State {
     GAME_OVER
 }
 
-State state;
-StartMenu startMenu;
-Instructions instructions;
-GameOver gameOver;
-
-player playerGame;
-
-
 void setup() {
-  size(1000, 1000);
+  size(1200, 900);
+  //Background Images
+  startPic = loadImage("backgroundstart.jpg");
+  startPic.resize(1200, 900);
+  gamePic = loadImage("petri.png");
+  gamePic.resize(1200, 900);
+
+  //Fonts
   titleFont = createFont("Radioactive-Regular.ttf", 50);
   instructionFont = createFont("HelveticaLTStd-Light.otf", 50);
 
+  //Game Screens, as classes
   startMenu = new StartMenu();
   instructions = new Instructions();
   gameOver = new GameOver();
-
   playerGame = new player();
-
+  //Start the game state in the start menu
   state = State.START_MENU;
 
   //create the arraylist's in the setup
@@ -102,82 +107,92 @@ void setup() {
   avatar = new Sprite(this, "reglife.png", 24, 1, 1);
   //set the frame sequence
   avatar.setFrameSequence(0, 1);
+
   //use a for loop to add the lives into the game
   //Specify their starting location
   for (int i = 0; i < rLife.size(); i++) {
     rLife.add(new RegLife(width/2, height/2));
   }
-  //Call the arrayList again
-  lLife = new ArrayList<largeLife>();
 
+  //Call the arrayList again and do this for the other critters
+  lLife = new ArrayList<largeLife>();
   for (int i = 0; i < lLife.size(); i++) {
     lLife.add(new largeLife("lLife", width/2, height/2, 116));
   }
 
   sLife = new ArrayList<smallLife>();
-
   for (int i = 0; i < sLife.size(); i++) {
     sLife.add(new smallLife("sLife", width/2, height/2, 20));
   }
 
   v = new ArrayList<virus>();
-
   for (int i = 0; i < v.size(); i++) {
     v.add (new virus("virus", width/3, height/3, 9));
   }
 
+  //Additional Content is the timer
   aC = new additionalContent();
+
+  //Call in the player class
   pl = new player(width/2, height/2);
+
   //Load in all the sound files
   //Changed the amplitude because they were too loud
   rLifedeplete = new SoundFile(this, "rLifedeplete.wav");
-  rLifedeplete.amp(.03);//used
+  rLifedeplete.amp(.03);
 
   rLifeSpawn = new SoundFile(this, "rLifespawn.wav");
   rLifeSpawn.amp(.1);
 
   lLifeHunger = new SoundFile(this, "lLifeHnger.wav");
-  lLifeHunger.amp(.001);//used
+  lLifeHunger.amp(.001);
 
 
   lLifeAlert= new SoundFile (this, "lLifeAlter.wav");
-  lLifeAlert.amp(.1);//used
+  lLifeAlert.amp(.1);
   lLifedeplete = new SoundFile (this, "lLifedeplete.wav");
-  lLifedeplete.amp(.1);//used
+  lLifedeplete.amp(.1);
 
   lLifespawn = new SoundFile (this, "lLifespawn.wav");
-  lLifespawn.amp(.1);//used
+  lLifespawn.amp(.1);
 
   sLifedead = new SoundFile (this, "sLifedead.wav");
-  sLifedead.amp(.1);//used
+  sLifedead.amp(.1);
   sLifeSpawn = new SoundFile(this, "sLifespawn.wav");
-  sLifeSpawn.amp(.01);//used
+  sLifeSpawn.amp(.01);
 
 
   virusSpawn = new SoundFile(this, "virusalarm.mp3");
-  virusSpawn.amp(.3);//used 
+  virusSpawn.amp(.3);
 
   random1 = new SoundFile(this, "random0.mp3");
   random2 = new SoundFile(this, "random1.mp3");
   random3 = new SoundFile(this, "random2.wav");
   random4 = new SoundFile(this, "random3.mp3");
+
+  music0 = new SoundFile(this, "music0.mp3");
+  music1 = new SoundFile(this, "music1.mp3");
+  music2 = new SoundFile(this, "music2.mp3");
 }
 
 void draw() {
-
+  //Switch between the game screens of the game using a switch statment and state as the name which call the screen 
   switch (state) {
-
-
+    //If we are in no state then we break out of the loop and switch to the start menu state 
   case NONE:
     break;
-
+    //Once the start menu is finished (by pressing enter) we switch to the instructions 
   case START_MENU:
+    //Update calls the display method
     startMenu.update();
     if (startMenu.finished) {
       state = State.INSTRUCTIONS;
     }
     break;
 
+    //When we are in the instructions display it with update
+    //then to the state as NONE so it works
+    //we then switch to player when we press A
   case INSTRUCTIONS:
     instructions.update();
     if (instructions.selection != State.NONE) {
@@ -186,11 +201,12 @@ void draw() {
       state = State.PLAYER;
     }
     break;
+    //Case player is the game, when the game is over we switch to the game over screen 
   case PLAYER:
     if (instructions.selection == State.NONE) {
       if (!gameOver.gameDone) {
-        background(255);
-
+        //use the background as an image
+        background(gamePic);
         //use for loop to loop through their properties
         for (int r = 0; r < rLife.size(); r ++) {
           RegLife rLives = rLife.get(r);
@@ -202,7 +218,7 @@ void draw() {
           S4P.drawSprites();
           //set the frame sequence based on the number of frames and the speed each frame is shown
           avatar.setFrameSequence(24, 1, .1);
-
+          //Call all the methods
           rLives.dead();
           rLives.update();
           rLives.wander();
@@ -237,7 +253,6 @@ void draw() {
 
         for (int vs = 0; vs < v.size(); vs++) {
           virus vrus =  v.get(vs);
-
           vrus.dead();
           vrus.update();
           vrus.findFood(rLife, sLife, pl);
@@ -251,17 +266,16 @@ void draw() {
 
         //A way of spawning in the virus at random times
         //If r lands on 1 then a virus spawns in 
-        //R chooses a random number between 0 and 5000
-        //5000 also decreases so theres more of a likelyhood that one will be chosen
+        //R chooses a random number between 0 and 7000
+        //7000 also decreases so theres more of a likelyhood that one will be chosen
         r = floor(random(199, rV));
         rV -=.02;
         if (r == 200) {
           v.add(new virus("virus", width/3, height/3, 9));
           virusSpawn.play();
         } 
-
+        //player and timer classes
         aC.timer(instructions);
-        aC.lifeList();
 
         pl.randomSounds();
         pl.movement();
@@ -269,7 +283,7 @@ void draw() {
         pl.offScreen();
         pl.display();
         pl.ifDead(gameOver);
-
+        //When the game is done we switch the state again
         if (gameOver.gameDone) {
           state = State.GAME_OVER;
         }
