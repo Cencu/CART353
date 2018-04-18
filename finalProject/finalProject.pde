@@ -49,7 +49,7 @@ SoundFile random3;
 SoundFile random4;
 
 Minim minim;
-//AudioPlayer[] music = new AudioPlayer[3];
+AudioPlayer[] music = new AudioPlayer[3];
 int count =0;
 AudioPlayer music0;
 AudioPlayer music1;
@@ -178,7 +178,8 @@ void setup() {
   music0 = minim.loadFile("music0.mp3");
   music1 = minim.loadFile("music1.mp3");
   music2 = minim.loadFile("music2.mp3");
-  /*  music[0] = minim.loadFile("random0.mp3");
+ // music[count].play();
+   /* music[0] = minim.loadFile("random0.mp3");
    music[1] = minim.loadFile("music1.mp3");
    music[2] = minim.loadFile("music2.mp3");*/
 }
@@ -186,7 +187,7 @@ void setup() {
 void draw() {
   //method for looping through music 
   music0.play();
-  if (music0.position() >= music0.length()-5) {
+  if (!music0.isPlaying()) {
     music1.play();
   } 
   if (music1.position() >= music1.length()-5) {

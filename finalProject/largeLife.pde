@@ -240,13 +240,16 @@ class largeLife {
       if (eating == true) {
         //then the viruses health depletes
         vs.health--;
+        virusSpawn.stop();
       } 
       //If the virus is dead then we remove it, the large life gains a surge of health
       if (vs.dead()) {
+        virusSpawn.stop();
+
         v.remove(0);
         health += 100;
         lLifeAlert.play();
-        virusSpawn.stop();
+        // virusSpawn.stop();
       } else {
         eating = false;
       }
