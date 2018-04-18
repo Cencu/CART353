@@ -178,15 +178,12 @@ void setup() {
   music0 = minim.loadFile("music0.mp3");
   music1 = minim.loadFile("music1.mp3");
   music2 = minim.loadFile("music2.mp3");
- // music[count].play();
-   /* music[0] = minim.loadFile("random0.mp3");
-   music[1] = minim.loadFile("music1.mp3");
-   music[2] = minim.loadFile("music2.mp3");*/
+  music0.play();
 }
 
 void draw() {
   //method for looping through music 
-  music0.play();
+
   if (!music0.isPlaying()) {
     music1.play();
   } 
